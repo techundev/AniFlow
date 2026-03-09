@@ -1,4 +1,4 @@
-package com.techun.dev.aniflow.model
+package com.techun.dev.aniflow.home.model
 
 data class Article(
     val id: Int,

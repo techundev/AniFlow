@@ -1,4 +1,4 @@
-package com.techun.dev.aniflow.components
+package com.techun.dev.aniflow.core.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
