@@ -9,6 +9,9 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation3.runtime.NavKey
+import com.techun.dev.aniflow.core.navigation.NavRoutes.Favorites
+import com.techun.dev.aniflow.core.navigation.NavRoutes.Home
+import com.techun.dev.aniflow.core.navigation.NavRoutes.Profile
 
 data class BottomNavItem(
     val route: NavKey,

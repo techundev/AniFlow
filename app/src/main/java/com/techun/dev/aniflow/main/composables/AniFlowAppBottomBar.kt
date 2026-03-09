@@ -5,7 +5,7 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.Composable
 import androidx.navigation3.runtime.NavKey
-import com.techun.dev.aniflow.components.AniFlowText
+import com.techun.dev.aniflow.core.components.AniFlowText
 import com.techun.dev.aniflow.core.navigation.bottomNavItems
 
 @Composable
