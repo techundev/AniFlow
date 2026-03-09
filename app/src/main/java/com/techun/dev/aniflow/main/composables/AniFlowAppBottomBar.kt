@@ -1,4 +1,4 @@
-package com.techun.dev.aniflow.mainscreen.composables
+package com.techun.dev.aniflow.main.composables
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar

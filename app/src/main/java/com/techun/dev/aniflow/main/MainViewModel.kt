@@ -1,4 +1,4 @@
-package com.techun.dev.aniflow.mainscreen
+package com.techun.dev.aniflow.main
 
 import androidx.lifecycle.ViewModel
 import androidx.navigation3.runtime.NavKey

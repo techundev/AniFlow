@@ -1,4 +1,4 @@
-package com.techun.dev.aniflow.mainscreen
+package com.techun.dev.aniflow.main
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -14,7 +14,10 @@ import androidx.navigation3.ui.NavDisplay
 import com.techun.dev.aniflow.core.navigation.Favorites
 import com.techun.dev.aniflow.core.navigation.Home
 import com.techun.dev.aniflow.core.navigation.Profile
-import com.techun.dev.aniflow.mainscreen.composables.AniFlowAppBottomBar
+import com.techun.dev.aniflow.favorite.FavoriteScreen
+import com.techun.dev.aniflow.home.HomeScreen
+import com.techun.dev.aniflow.main.composables.AniFlowAppBottomBar
+import com.techun.dev.aniflow.profile.ProfileScreen
 
 @Composable
 fun MainScreen(viewModel: MainViewModel = viewModel()) {
@@ -42,9 +45,9 @@ fun MainScreen(viewModel: MainViewModel = viewModel()) {
             backStack = backStack,
             modifier = Modifier.padding(innerPadding),
             entryProvider = entryProvider {
-                entry<Home> {HomeScreen()}
-                entry<Favorites> {}
-                entry<Profile> {}
+                entry<Home> { HomeScreen() }
+                entry<Favorites> { FavoriteScreen() }
+                entry<Profile> { ProfileScreen() }
             }
         )
     }
