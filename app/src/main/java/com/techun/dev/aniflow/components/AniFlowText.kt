@@ -11,6 +11,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.TextUnit.Companion
 
 @Composable
 fun AniFlowText(
@@ -19,6 +20,7 @@ fun AniFlowText(
     color: Color = MaterialTheme.colorScheme.onBackground,
     fontSize: TextUnit = TextUnit.Unspecified,
     letterSpacing: TextUnit = TextUnit.Unspecified,
+    lineHeight: TextUnit = TextUnit.Unspecified,
     fontWeight: FontWeight? = null,
     textAlign: TextAlign? = null,
     maxLines: Int = Int.MAX_VALUE,
@@ -32,6 +34,7 @@ fun AniFlowText(
         style = style,
         fontSize = fontSize,
         letterSpacing = letterSpacing,
+        lineHeight = lineHeight,
         textAlign = textAlign,
         fontWeight = fontWeight,
         overflow = TextOverflow.Ellipsis,
