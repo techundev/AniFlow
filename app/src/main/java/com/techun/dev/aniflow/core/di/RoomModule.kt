@@ -14,7 +14,6 @@ val roomModule = module {
         ).fallbackToDestructiveMigration(false).build()
     }
 
-    single {
-        get<NewsDatabase>().feedDao()
-    }
+    single { get<NewsDatabase>().feedDao() }
+    single { get<NewsDatabase>().favoritesDao() }
 }

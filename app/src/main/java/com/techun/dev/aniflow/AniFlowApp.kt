@@ -2,6 +2,7 @@ package com.techun.dev.aniflow
 
 import android.app.Application
 import com.techun.dev.aniflow.core.di.roomModule
+import com.techun.dev.aniflow.favorite.di.favoritesDataModule
 import com.techun.dev.aniflow.favorite.di.favoritesDomainModule
 import com.techun.dev.aniflow.home.di.feedDataModule
 import com.techun.dev.aniflow.home.di.feedDomainModule
@@ -21,7 +22,8 @@ class AniFlowApp : Application() {
                 feedDataModule,
                 feedDomainModule,
                 feedPresentationModule,
-                favoritesDomainModule
+                favoritesDomainModule,
+                favoritesDataModule
             )
         }
     }
