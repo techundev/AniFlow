@@ -18,7 +18,7 @@ class FavoritesRepositoryImpl(
     }
 
     override fun getFavoriteIds(): Flow<Set<String>> {
-        return dao.getFavoriteIds()
+        return dao.getFavoriteIds().map { it.toSet() }
     }
 
     override suspend fun addFavorite(item: FavoriteItem) {

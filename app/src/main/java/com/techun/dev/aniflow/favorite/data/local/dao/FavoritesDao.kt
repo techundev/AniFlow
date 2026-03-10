@@ -13,7 +13,7 @@ interface FavoritesDao {
     fun getAllFavorites(): Flow<List<FavoriteEntity>>
 
     @Query("SELECT id FROM Favorites")
-    fun getFavoriteIds(): Flow<Set<String>>
+    fun getFavoriteIds(): Flow<List<String>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addFavorite(favorite: FavoriteEntity)
