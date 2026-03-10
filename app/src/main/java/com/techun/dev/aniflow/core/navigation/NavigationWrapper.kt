@@ -12,7 +12,7 @@ import com.techun.dev.aniflow.core.navigation.NavRoutes.Favorites
 import com.techun.dev.aniflow.core.navigation.NavRoutes.Home
 import com.techun.dev.aniflow.core.navigation.NavRoutes.Profile
 import com.techun.dev.aniflow.favorite.FavoriteScreen
-import com.techun.dev.aniflow.home.HomeScreen
+import com.techun.dev.aniflow.home.ui.HomeScreen
 import com.techun.dev.aniflow.profile.ProfileScreen
 
 @Composable

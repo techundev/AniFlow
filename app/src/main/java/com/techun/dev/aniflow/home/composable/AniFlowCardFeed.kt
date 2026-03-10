@@ -1,4 +1,4 @@
-package com.techun.dev.aniflow.core.components
+package com.techun.dev.aniflow.home.composable
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -34,14 +34,16 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.techun.dev.aniflow.home.model.Article
+import com.techun.dev.aniflow.core.components.AniFlowAsyncImage
+import com.techun.dev.aniflow.core.components.AniFlowText
+import com.techun.dev.aniflow.home.domain.model.NewsItem
 
 @Composable
 fun AniFlowCardFeed(
     modifier: Modifier = Modifier,
-    article: Article,
+    article: NewsItem,
     featured: Boolean = false,
-    onClick: (Article) -> Unit,
+    onClick: (NewsItem) -> Unit,
     onToggleFav: (Int) -> Unit
 ) {
     val interactionSource = remember { MutableInteractionSource() }
@@ -65,11 +67,10 @@ fun AniFlowCardFeed(
                 shape = MaterialTheme.shapes.medium,
                 ambientColor = tc.copy(alpha = 0.2f),
                 spotColor = tc.copy(alpha = 0.2f)
-            )
-            .clickable(
-                interactionSource = interactionSource,
-                indication = null,
-                onClick = { onClick(article) }), shape = MaterialTheme.shapes.large
+            ),
+        shape = MaterialTheme.shapes.large,
+        onClick = { onClick(article) },
+        interactionSource = interactionSource
     ) {
         Column {
             Box(
@@ -99,7 +100,7 @@ fun AniFlowCardFeed(
 
                 //Chip
                 AniFlowTagBadge(
-                    tag = article.tag,
+                    tag = "MAL News",
                     color = tc,
                     modifier = Modifier
                         .align(Alignment.TopStart)
@@ -108,8 +109,8 @@ fun AniFlowCardFeed(
 
                 //Fav
                 AniFlowFavoriteButton(
-                    isFav = article.isFavorite,
-                    onToggle = { onToggleFav(article.id) },
+                    isFav = false,
+                    onToggle = { /*onToggleFav(article.id)*/ },
                     modifier = Modifier
                         .align(Alignment.TopEnd)
                         .padding(8.dp)
@@ -131,7 +132,7 @@ fun AniFlowCardFeed(
                     maxLines = 3
                 )
                 AniFlowText(
-                    text = article.summary,
+                    text = article.description,
                     fontSize = 12.sp,
                     lineHeight = 18.sp,
                     style = MaterialTheme.typography.labelSmall,
@@ -141,8 +142,8 @@ fun AniFlowCardFeed(
                 HorizontalDivider(modifier = Modifier.fillMaxWidth(), thickness = 1.dp)
                 Spacer(modifier = Modifier.height(2.dp))
                 CardFooter(
-                    source = article.source,
-                    timeAgo = article.timeAgo,
+                    source = "MyAnimeList",
+                    timeAgo = article.pubDate,
                     modifier = Modifier.fillMaxWidth()
                 )
             }
@@ -170,7 +171,11 @@ fun AniFlowFavoriteButton(
                 if (isFav) AccentPink.copy(alpha = 0.2f)
                 else Color.Black.copy(alpha = 0.4f)
             )
-            .clickable(onClick = onToggle)
+            .clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() },
+                onClick = onToggle
+            )
     ) {
         AniFlowText(
             text = if (isFav) "❤️" else "🤍", fontSize = 15.sp
@@ -229,6 +234,8 @@ private fun CardFooter(
                 text = source, style = MaterialTheme.typography.labelSmall, fontSize = 10.sp
             )
         }
-        AniFlowText(text = timeAgo, fontSize = 10.sp)
+        AniFlowText(
+            text = timeAgo, fontSize = 10.sp
+        )
     }
 }
