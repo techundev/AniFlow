@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -40,7 +40,7 @@ fun HomeScreen(viewModel: FeedViewModel = koinViewModel()) {
             when (val state = uiState) {
                 is FeedUiState.Error -> {
                     FeedError(
-                        message = state.message, onRetry = { viewModel.loadFeed() })
+                        message = state.message, onRetry = { viewModel.syncFeed() })
                 }
 
                 is FeedUiState.Loading -> {
@@ -92,8 +92,13 @@ fun FeedContent(
     LazyColumn(
         contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        itemsIndexed(items) { index, newsItem ->
-            AniFlowCardFeed(article = newsItem, featured = index == 0, onClick = onItemClick, onToggleFav = {})
+        items(
+            items, key = { it.id }) { newsItem ->
+            AniFlowCardFeed(
+                article = newsItem,
+                featured = newsItem.id == items.first().id,
+                onClick = onItemClick,
+                onToggleFav = {})
         }
     }
 }

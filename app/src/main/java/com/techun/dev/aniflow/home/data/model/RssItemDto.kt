@@ -1,20 +1,24 @@
 package com.techun.dev.aniflow.home.data.model
 
-import com.techun.dev.aniflow.home.domain.model.NewsItem
+import com.techun.dev.aniflow.core.data.database.entity.RssItemEntity
 
 data class RssItemDto(
-    val title: String,       // Título del artículo
-    val link: String,        // URL del artículo
-    val description: String, // Resumen/descripción
-    val pubDate: String,     // Fecha de publicación
-    val author: String,       // Autor (puede estar vacío en HN)
+    val title: String,
+    val link: String,
+    val description: String,
+    val pubDate: String,
+    val author: String,
     val imageUrl: String
 )
 
-fun RssItemDto.toNewsItem() = NewsItem(
+
+fun RssItemDto.toEntity() = RssItemEntity(
+    id = link,
     title = title,
     link = link,
     description = description,
     pubDate = pubDate,
-    imageUrl = imageUrl
+    author = author,
+    imageUrl = imageUrl,
+   // isFavorite = false
 )

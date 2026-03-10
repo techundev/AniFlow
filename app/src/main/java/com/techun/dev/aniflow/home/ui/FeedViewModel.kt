@@ -1,54 +1,47 @@
 package com.techun.dev.aniflow.home.ui
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.techun.dev.aniflow.home.domain.usecase.GetFeedUseCase
+import com.techun.dev.aniflow.home.domain.usecase.SyncFeedUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class FeedViewModel(
-    private val getFeedUseCase: GetFeedUseCase
+    private val getFeedUseCase: GetFeedUseCase,
+    private val syncFeedUseCase: SyncFeedUseCase
 ) : ViewModel() {
-    private val TAG = "RSS_DEBUG"
-
     private val _uiState = MutableStateFlow<FeedUiState>(FeedUiState.Loading)
     val uiState: StateFlow<FeedUiState> = _uiState.asStateFlow()
 
     init {
-        loadFeed()
+        observeFeed()
+        syncFeed()
     }
 
-    fun loadFeed() {
+    private fun observeFeed() {
         viewModelScope.launch {
-            _uiState.value = FeedUiState.Loading
-            Log.d(TAG, "⏳ Cargando feed...")
+            getFeedUseCase().collect { items ->
+                _uiState.value = if (items.isEmpty()) {
+                    FeedUiState.Loading
+                } else {
+                    FeedUiState.Success(items)
+                }
+            }
+        }
+    }
 
-            // Ejecutamos el caso de uso y manejamos el resultado
-            getFeedUseCase()
-                .onSuccess { items ->
-                    Log.d(TAG, "✅ Feed cargado: ${items.size} items")
-                    items.forEachIndexed { index, item ->
-                        Log.d(
-                            TAG, """
-                            📰 Item #$index
-                            ├─ title      : ${item.title}
-                            ├─ link       : ${item.link}
-                            ├─ description: ${item.description.take(80)}...
-                            ├─ pubDate    : ${item.pubDate}
-                            └─ imageUrl   : ${item.imageUrl}
-                        """.trimIndent()
+    fun syncFeed() {
+        viewModelScope.launch {
+            syncFeedUseCase()
+                .onFailure { error ->
+                    if (_uiState.value is FeedUiState.Loading) {
+                        _uiState.value = FeedUiState.Error(
+                            error.message ?: "Error desconocido"
                         )
                     }
-                    _uiState.value = FeedUiState.Success(items)
-                }
-                .onFailure { error ->
-                    Log.e(TAG, "❌ Error al cargar el feed: ${error.message}", error)
-                    _uiState.value = FeedUiState.Error(
-                        message = error.message ?: "Error desconocido"
-                    )
                 }
         }
     }
