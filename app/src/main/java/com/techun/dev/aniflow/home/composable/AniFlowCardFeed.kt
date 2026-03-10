@@ -1,4 +1,4 @@
-package com.techun.dev.aniflow.core.components
+package com.techun.dev.aniflow.home.composable
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -34,14 +34,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.techun.dev.aniflow.home.model.Article
+import com.techun.dev.aniflow.home.domain.model.NewsItem
 
 @Composable
 fun AniFlowCardFeed(
     modifier: Modifier = Modifier,
-    article: Article,
+    article: NewsItem,
     featured: Boolean = false,
-    onClick: (Article) -> Unit,
+    onClick: (NewsItem) -> Unit,
     onToggleFav: (Int) -> Unit
 ) {
     val interactionSource = remember { MutableInteractionSource() }
@@ -78,7 +78,7 @@ fun AniFlowCardFeed(
                     .height(imageHeight)
             ) {
                 //Banner Card
-                AniFlowAsyncImage(
+                _root_ide_package_.com.techun.dev.aniflow.core.components.AniFlowAsyncImage(
                     data = article.imageUrl,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()
@@ -99,7 +99,7 @@ fun AniFlowCardFeed(
 
                 //Chip
                 AniFlowTagBadge(
-                    tag = article.tag,
+                    tag = "MAL News",
                     color = tc,
                     modifier = Modifier
                         .align(Alignment.TopStart)
@@ -108,8 +108,8 @@ fun AniFlowCardFeed(
 
                 //Fav
                 AniFlowFavoriteButton(
-                    isFav = article.isFavorite,
-                    onToggle = { onToggleFav(article.id) },
+                    isFav = false,
+                    onToggle = { /*onToggleFav(article.id)*/ },
                     modifier = Modifier
                         .align(Alignment.TopEnd)
                         .padding(8.dp)
@@ -123,15 +123,15 @@ fun AniFlowCardFeed(
                         start = 16.dp, end = 16.dp, top = 14.dp, bottom = 16.dp
                     ), verticalArrangement = Arrangement.spacedBy(6.dp)
             ) {
-                AniFlowText(
+                _root_ide_package_.com.techun.dev.aniflow.core.components.AniFlowText(
                     text = article.title,
                     fontSize = if (featured) 16.sp else 13.sp,
                     fontWeight = FontWeight.Bold,
                     lineHeight = if (featured) 22.sp else 18.sp,
                     maxLines = 3
                 )
-                AniFlowText(
-                    text = article.summary,
+                _root_ide_package_.com.techun.dev.aniflow.core.components.AniFlowText(
+                    text = article.description,
                     fontSize = 12.sp,
                     lineHeight = 18.sp,
                     style = MaterialTheme.typography.labelSmall,
@@ -141,8 +141,8 @@ fun AniFlowCardFeed(
                 HorizontalDivider(modifier = Modifier.fillMaxWidth(), thickness = 1.dp)
                 Spacer(modifier = Modifier.height(2.dp))
                 CardFooter(
-                    source = article.source,
-                    timeAgo = article.timeAgo,
+                    source = "MyAnimeList",
+                    timeAgo = article.pubDate,
                     modifier = Modifier.fillMaxWidth()
                 )
             }
@@ -172,7 +172,7 @@ fun AniFlowFavoriteButton(
             )
             .clickable(onClick = onToggle)
     ) {
-        AniFlowText(
+        _root_ide_package_.com.techun.dev.aniflow.core.components.AniFlowText(
             text = if (isFav) "❤️" else "🤍", fontSize = 15.sp
         )
     }
@@ -188,7 +188,7 @@ fun AniFlowTagBadge(
             .background(color.copy(alpha = 0.13f))
             .padding(horizontal = 10.dp, vertical = 3.dp)
     ) {
-        AniFlowText(
+        _root_ide_package_.com.techun.dev.aniflow.core.components.AniFlowText(
             text = tag.uppercase(),
             color = color,
             fontSize = 10.sp,
@@ -215,7 +215,7 @@ private fun CardFooter(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
-            AniFlowAsyncImage(
+            _root_ide_package_.com.techun.dev.aniflow.core.components.AniFlowAsyncImage(
                 data = "", modifier = Modifier
                     .size(18.dp)
                     .clip(CircleShape)
@@ -225,10 +225,13 @@ private fun CardFooter(
                         )
                     )
             )
-            AniFlowText(
+            _root_ide_package_.com.techun.dev.aniflow.core.components.AniFlowText(
                 text = source, style = MaterialTheme.typography.labelSmall, fontSize = 10.sp
             )
         }
-        AniFlowText(text = timeAgo, fontSize = 10.sp)
+        _root_ide_package_.com.techun.dev.aniflow.core.components.AniFlowText(
+            text = timeAgo,
+            fontSize = 10.sp
+        )
     }
 }

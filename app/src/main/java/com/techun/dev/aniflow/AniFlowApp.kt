@@ -1,0 +1,24 @@
+package com.techun.dev.aniflow
+
+import android.app.Application
+import com.techun.dev.aniflow.home.di.feedDataModule
+import com.techun.dev.aniflow.home.di.feedDomainModule
+import com.techun.dev.aniflow.home.di.feedPresentationModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
+
+class AniFlowApp : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        startKoin {
+            androidLogger()
+            androidContext(this@AniFlowApp)
+            modules(
+                feedDataModule,
+                feedDomainModule,
+                feedPresentationModule
+            )
+        }
+    }
+}
