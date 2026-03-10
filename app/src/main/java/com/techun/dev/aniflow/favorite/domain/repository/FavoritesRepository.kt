@@ -1,6 +1,6 @@
-package com.techun.dev.aniflow.favorite.repository
+package com.techun.dev.aniflow.favorite.domain.repository
 
-import com.techun.dev.aniflow.favorite.domain.FavoriteItem
+import com.techun.dev.aniflow.favorite.domain.model.FavoriteItem
 import kotlinx.coroutines.flow.Flow
 
 interface FavoritesRepository {

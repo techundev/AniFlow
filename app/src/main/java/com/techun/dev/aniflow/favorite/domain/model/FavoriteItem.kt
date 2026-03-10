@@ -1,4 +1,4 @@
-package com.techun.dev.aniflow.favorite.domain
+package com.techun.dev.aniflow.favorite.domain.model
 
 data class FavoriteItem(
     val id: String,
