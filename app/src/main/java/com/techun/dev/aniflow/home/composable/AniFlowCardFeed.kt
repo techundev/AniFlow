@@ -34,6 +34,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.techun.dev.aniflow.core.components.AniFlowAsyncImage
+import com.techun.dev.aniflow.core.components.AniFlowText
 import com.techun.dev.aniflow.home.domain.model.NewsItem
 
 @Composable
@@ -65,11 +67,10 @@ fun AniFlowCardFeed(
                 shape = MaterialTheme.shapes.medium,
                 ambientColor = tc.copy(alpha = 0.2f),
                 spotColor = tc.copy(alpha = 0.2f)
-            )
-            .clickable(
-                interactionSource = interactionSource,
-                indication = null,
-                onClick = { onClick(article) }), shape = MaterialTheme.shapes.large
+            ),
+        shape = MaterialTheme.shapes.large,
+        onClick = { onClick(article) },
+        interactionSource = interactionSource
     ) {
         Column {
             Box(
@@ -78,7 +79,7 @@ fun AniFlowCardFeed(
                     .height(imageHeight)
             ) {
                 //Banner Card
-                _root_ide_package_.com.techun.dev.aniflow.core.components.AniFlowAsyncImage(
+                AniFlowAsyncImage(
                     data = article.imageUrl,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()
@@ -123,14 +124,14 @@ fun AniFlowCardFeed(
                         start = 16.dp, end = 16.dp, top = 14.dp, bottom = 16.dp
                     ), verticalArrangement = Arrangement.spacedBy(6.dp)
             ) {
-                _root_ide_package_.com.techun.dev.aniflow.core.components.AniFlowText(
+                AniFlowText(
                     text = article.title,
                     fontSize = if (featured) 16.sp else 13.sp,
                     fontWeight = FontWeight.Bold,
                     lineHeight = if (featured) 22.sp else 18.sp,
                     maxLines = 3
                 )
-                _root_ide_package_.com.techun.dev.aniflow.core.components.AniFlowText(
+                AniFlowText(
                     text = article.description,
                     fontSize = 12.sp,
                     lineHeight = 18.sp,
@@ -170,9 +171,13 @@ fun AniFlowFavoriteButton(
                 if (isFav) AccentPink.copy(alpha = 0.2f)
                 else Color.Black.copy(alpha = 0.4f)
             )
-            .clickable(onClick = onToggle)
+            .clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() },
+                onClick = onToggle
+            )
     ) {
-        _root_ide_package_.com.techun.dev.aniflow.core.components.AniFlowText(
+        AniFlowText(
             text = if (isFav) "❤️" else "🤍", fontSize = 15.sp
         )
     }
@@ -188,7 +193,7 @@ fun AniFlowTagBadge(
             .background(color.copy(alpha = 0.13f))
             .padding(horizontal = 10.dp, vertical = 3.dp)
     ) {
-        _root_ide_package_.com.techun.dev.aniflow.core.components.AniFlowText(
+        AniFlowText(
             text = tag.uppercase(),
             color = color,
             fontSize = 10.sp,
@@ -215,7 +220,7 @@ private fun CardFooter(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
-            _root_ide_package_.com.techun.dev.aniflow.core.components.AniFlowAsyncImage(
+            AniFlowAsyncImage(
                 data = "", modifier = Modifier
                     .size(18.dp)
                     .clip(CircleShape)
@@ -225,13 +230,12 @@ private fun CardFooter(
                         )
                     )
             )
-            _root_ide_package_.com.techun.dev.aniflow.core.components.AniFlowText(
+            AniFlowText(
                 text = source, style = MaterialTheme.typography.labelSmall, fontSize = 10.sp
             )
         }
-        _root_ide_package_.com.techun.dev.aniflow.core.components.AniFlowText(
-            text = timeAgo,
-            fontSize = 10.sp
+        AniFlowText(
+            text = timeAgo, fontSize = 10.sp
         )
     }
 }
