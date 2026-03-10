@@ -1,6 +1,7 @@
 package com.techun.dev.aniflow.home.domain.model
 
 data class NewsItem(
+    val id: String,
     val title: String,
     val link: String,
     val description: String,
