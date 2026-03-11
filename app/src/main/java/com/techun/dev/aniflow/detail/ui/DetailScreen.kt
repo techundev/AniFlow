@@ -30,7 +30,7 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun DetailScreen(
-    newsItemId: String, viewModel: DetailViewModel = koinViewModel()
+    newsItemId: String, viewModel: DetailsViewModel = koinViewModel()
 ) {
     LaunchedEffect(newsItemId) {
         //viewModel.loadNewsItem(id = newsItemId)
