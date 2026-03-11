@@ -1,9 +1,9 @@
-package com.techun.dev.aniflow.home.data.remote
+package com.techun.dev.aniflow.feed.data.remote
 
 
 import com.rometools.rome.io.SyndFeedInput
 import com.rometools.rome.io.XmlReader
-import com.techun.dev.aniflow.home.data.model.RssItemDto
+import com.techun.dev.aniflow.feed.data.model.RssItemDto
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText

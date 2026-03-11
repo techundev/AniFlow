@@ -12,7 +12,7 @@ import com.techun.dev.aniflow.core.navigation.NavRoutes.Favorites
 import com.techun.dev.aniflow.core.navigation.NavRoutes.Home
 import com.techun.dev.aniflow.core.navigation.NavRoutes.Profile
 import com.techun.dev.aniflow.favorite.ui.FavoritesScreen
-import com.techun.dev.aniflow.home.ui.HomeScreen
+import com.techun.dev.aniflow.feed.ui.FeedScreen
 import com.techun.dev.aniflow.profile.ProfileScreen
 
 @Composable
@@ -28,7 +28,7 @@ fun NavigationWrapper(
         },
         entryProvider = entryProvider {
             entry<Home> {
-                HomeScreen()
+                FeedScreen()
             }
             entry<Favorites> {
                 FavoritesScreen()

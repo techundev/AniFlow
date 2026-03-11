@@ -1,4 +1,4 @@
-package com.techun.dev.aniflow.home.ui
+package com.techun.dev.aniflow.feed.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -6,9 +6,9 @@ import com.techun.dev.aniflow.favorite.data.mapper.toFavoriteItem
 import com.techun.dev.aniflow.favorite.domain.usecase.AddFavoriteUseCase
 import com.techun.dev.aniflow.favorite.domain.usecase.GetFavoriteIdsUseCase
 import com.techun.dev.aniflow.favorite.domain.usecase.RemoveFavoriteUseCase
-import com.techun.dev.aniflow.home.domain.model.NewsItem
-import com.techun.dev.aniflow.home.domain.usecase.GetFeedUseCase
-import com.techun.dev.aniflow.home.domain.usecase.SyncFeedUseCase
+import com.techun.dev.aniflow.feed.domain.model.NewsItem
+import com.techun.dev.aniflow.feed.domain.usecase.GetFeedUseCase
+import com.techun.dev.aniflow.feed.domain.usecase.SyncFeedUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

@@ -1,4 +1,4 @@
-package com.techun.dev.aniflow.home.ui
+package com.techun.dev.aniflow.feed.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,12 +23,12 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.techun.dev.aniflow.core.components.AniFlowButton
 import com.techun.dev.aniflow.core.components.AniFlowText
-import com.techun.dev.aniflow.home.composable.AniFlowCardFeed
-import com.techun.dev.aniflow.home.domain.model.NewsItem
+import com.techun.dev.aniflow.feed.composable.AniFlowCardFeed
+import com.techun.dev.aniflow.feed.domain.model.NewsItem
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun HomeScreen(viewModel: FeedViewModel = koinViewModel()) {
+fun FeedScreen(viewModel: FeedViewModel = koinViewModel()) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Scaffold { innerPadding ->

@@ -1,4 +1,4 @@
-package com.techun.dev.aniflow.home.data.database
+package com.techun.dev.aniflow.feed.data.database
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -39,15 +39,12 @@ interface FeedDao {
         insertNews(entities)
         entities.forEach { entity ->
             updateNewsContent(
-                id          = entity.id,
-                title       = entity.title,
+                id = entity.id,
+                title = entity.title,
                 description = entity.description,
-                pubDate     = entity.pubDate,
-                imageUrl    = entity.imageUrl
+                pubDate = entity.pubDate,
+                imageUrl = entity.imageUrl
             )
         }
     }
-
-//    @Query("UPDATE RssItem SET isFavorite = :isFavorite WHERE id = :id")
-//    suspend fun toggleFavorite(id: Int, isFavorite: Boolean)
 }

@@ -2,7 +2,7 @@ package com.techun.dev.aniflow.favorite.data.mapper
 
 import com.techun.dev.aniflow.favorite.data.local.entity.FavoriteEntity
 import com.techun.dev.aniflow.favorite.domain.model.FavoriteItem
-import com.techun.dev.aniflow.home.domain.model.NewsItem
+import com.techun.dev.aniflow.feed.domain.model.NewsItem
 
 // Entity → dominio
 fun FavoriteEntity.toFavoriteItem() = FavoriteItem(

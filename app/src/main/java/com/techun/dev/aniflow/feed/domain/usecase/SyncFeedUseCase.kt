@@ -1,6 +1,6 @@
-package com.techun.dev.aniflow.home.domain.usecase
+package com.techun.dev.aniflow.feed.domain.usecase
 
-import com.techun.dev.aniflow.home.domain.repository.FeedRepository
+import com.techun.dev.aniflow.feed.domain.repository.FeedRepository
 
 class SyncFeedUseCase(
     private val repository: FeedRepository

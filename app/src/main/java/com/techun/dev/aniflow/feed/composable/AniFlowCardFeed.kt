@@ -1,4 +1,4 @@
-package com.techun.dev.aniflow.home.composable
+package com.techun.dev.aniflow.feed.composable
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -36,7 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.techun.dev.aniflow.core.components.AniFlowAsyncImage
 import com.techun.dev.aniflow.core.components.AniFlowText
-import com.techun.dev.aniflow.home.domain.model.NewsItem
+import com.techun.dev.aniflow.feed.domain.model.NewsItem
 
 @Composable
 fun AniFlowCardFeed(
