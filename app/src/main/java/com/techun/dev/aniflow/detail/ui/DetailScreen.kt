@@ -33,7 +33,7 @@ fun DetailScreen(
     newsItemId: String, viewModel: DetailsViewModel = koinViewModel()
 ) {
     LaunchedEffect(newsItemId) {
-        //viewModel.loadNewsItem(id = newsItemId)
+        viewModel.loadNewsItem(id = newsItemId)
     }
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -80,8 +80,7 @@ fun DetailContent(newsItem: NewsItem) {
         )
 
         Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             AniFlowText(
                 text = newsItem.pubDate,
@@ -99,9 +98,7 @@ fun DetailContent(newsItem: NewsItem) {
             HorizontalDivider()
 
             AniFlowText(
-                text = newsItem.description,
-                fontSize = 14.sp,
-                lineHeight = 22.sp
+                text = newsItem.description, fontSize = 14.sp, lineHeight = 22.sp
             )
         }
     }
