@@ -51,9 +51,11 @@ fun HomeScreen(viewModel: FeedViewModel = koinViewModel()) {
 
                 is FeedUiState.Success -> {
                     FeedContent(
-                        items = state.items, onItemClick = { newsItem ->
+                        items = state.items,
+                        onItemClick = { newsItem ->
 
-                        })
+                        },
+                        onToggleFav = { viewModel.toggleFavorite(it) })
                 }
             }
         }
@@ -87,7 +89,9 @@ fun FeedError(
 
 @Composable
 fun FeedContent(
-    items: List<NewsItem>, onItemClick: (NewsItem) -> Unit
+    items: List<NewsItem>,
+    onItemClick: (NewsItem) -> Unit,
+    onToggleFav: (NewsItem) -> Unit
 ) {
     LazyColumn(
         contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -95,10 +99,11 @@ fun FeedContent(
         items(
             items, key = { it.id }) { newsItem ->
             AniFlowCardFeed(
-                article = newsItem,
+                item = newsItem,
                 featured = newsItem.id == items.first().id,
                 onClick = onItemClick,
-                onToggleFav = {})
+                onToggleFav = onToggleFav
+            )
         }
     }
 }
