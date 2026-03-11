@@ -11,6 +11,7 @@ import com.techun.dev.aniflow.favorite.di.favoritesUiModule
 import com.techun.dev.aniflow.feed.di.feedDataModule
 import com.techun.dev.aniflow.feed.di.feedDomainModule
 import com.techun.dev.aniflow.feed.di.feedUiModule
+import com.techun.dev.aniflow.profile.di.profileDataModule
 import com.techun.dev.aniflow.profile.di.profileDomainModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -33,6 +34,7 @@ class AniFlowApp : Application() {
                 detailsDataModule,
                 detailsDomainModule,
                 detailsUiModule,
+                profileDataModule,
                 profileDomainModule
             )
         }

@@ -7,10 +7,13 @@ import com.techun.dev.aniflow.detail.data.local.dao.DetailsDao
 import com.techun.dev.aniflow.favorite.data.local.dao.FavoritesDao
 import com.techun.dev.aniflow.favorite.data.local.entity.FavoriteEntity
 import com.techun.dev.aniflow.feed.data.database.FeedDao
+import com.techun.dev.aniflow.profile.data.local.dao.ProfileDao
 
 @Database(entities = [RssItemEntity::class, FavoriteEntity::class], version = 2)
 abstract class NewsDatabase : RoomDatabase() {
     abstract fun feedDao(): FeedDao
     abstract fun favoritesDao(): FavoritesDao
     abstract fun detailsDao(): DetailsDao
+
+    abstract fun profileDao(): ProfileDao
 }
