@@ -1,7 +1,6 @@
 package com.techun.dev.aniflow.detail.ui
 
 import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,14 +27,19 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.techun.dev.aniflow.core.components.AniFlowAsyncImage
 import com.techun.dev.aniflow.core.components.AniFlowButton
+import com.techun.dev.aniflow.core.components.AniFlowButtonSecondary
 import com.techun.dev.aniflow.core.components.AniFlowText
+import com.techun.dev.aniflow.core.utils.readingTimeMinutes
+import com.techun.dev.aniflow.core.utils.toReadableDate
+import com.techun.dev.aniflow.feed.composable.AniFlowCardFeed
+import com.techun.dev.aniflow.feed.composable.AniFlowFavoriteButton
 import com.techun.dev.aniflow.feed.composable.AniFlowTagBadge
 import com.techun.dev.aniflow.feed.domain.model.NewsItem
 import org.koin.compose.viewmodel.koinViewModel
-import androidx.core.net.toUri
 
 @Composable
 fun DetailScreen(
@@ -46,6 +50,7 @@ fun DetailScreen(
     }
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val related by viewModel.related.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
     Scaffold { innerPadding ->
@@ -62,11 +67,22 @@ fun DetailScreen(
                 is DetailUiState.Success -> {
                     DetailContent(
                         newsItem = state.newsItem,
+                        related = related,
                         onOpenLink = {
                             val intent = Intent(Intent.ACTION_VIEW, state.newsItem.link.toUri())
                             context.startActivity(intent)
-                        }
-                    )
+                        },
+                        onShare = {
+                            val intent = Intent(Intent.ACTION_SEND).apply {
+                                type ="text/plain"
+                                putExtra(Intent.EXTRA_SUBJECT, state.newsItem.title)
+                                putExtra(Intent.EXTRA_TEXT, state.newsItem.link)
+                            }
+                            context.startActivity(Intent.createChooser(intent,"Compartir via"))
+                        },
+                        onToggleFav = {
+                            viewModel.toggleFavorite(state.newsItem)
+                        })
                 }
 
                 is DetailUiState.Error -> {
@@ -83,20 +99,33 @@ fun DetailScreen(
 @Composable
 fun DetailContent(
     newsItem: NewsItem,
-    onOpenLink: () -> Unit
+    related: List<NewsItem>,
+    onOpenLink: () -> Unit,
+    onShare: () -> Unit,
+    onToggleFav: () -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
-        AniFlowAsyncImage(
-            data = newsItem.imageUrl,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(280.dp)
-        )
+        Box {
+            AniFlowAsyncImage(
+                data = newsItem.imageUrl,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(280.dp)
+            )
+
+            AniFlowFavoriteButton(
+                isFav = newsItem.isFavorite,
+                onToggle = onToggleFav,
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(12.dp)
+            )
+        }
 
         Column(
             modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -107,11 +136,10 @@ fun DetailContent(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 AniFlowTagBadge(
-                    tag = "MAL News",
-                    color = Color(0xFFE879F9)
+                    tag = "MAL News", color = Color(0xFFE879F9)
                 )
                 AniFlowText(
-                    text = newsItem.pubDate,
+                    text = newsItem.pubDate.toReadableDate(),
                     fontSize = 11.sp,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -124,6 +152,12 @@ fun DetailContent(
                 lineHeight = 28.sp
             )
 
+            AniFlowText(
+                text = "⏱ ${newsItem.description.readingTimeMinutes()} min de lectura",
+                fontSize = 11.sp,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
             HorizontalDivider()
 
             AniFlowText(
@@ -132,12 +166,34 @@ fun DetailContent(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            AniFlowButton(
-                text = "Ver en MyAnimeList",
-                onclick = onOpenLink,
+            Row(
                 modifier = Modifier.fillMaxWidth(),
-            )
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                AniFlowButtonSecondary(
+                    text = "Compartir", modifier = Modifier.weight(1f), onClick = onShare
+                )
+                AniFlowButton(
+                    text = "Ver más", modifier = Modifier.weight(1f), onclick = onOpenLink
+                )
+            }
 
+            if (related.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(8.dp))
+                AniFlowText(
+                    text = "Noticias relacionadas",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                related.forEach { relatedItem ->
+                    AniFlowCardFeed(
+                        item = relatedItem,
+                        featured = false,
+                        onClick = {},
+                        onToggleFav = {}
+                    )
+                }
+            }
             Spacer(modifier = Modifier.height(16.dp))
         }
     }

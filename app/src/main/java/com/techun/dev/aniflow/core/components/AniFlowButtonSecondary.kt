@@ -18,10 +18,12 @@ fun AniFlowButtonSecondary(
     onClick: () -> Unit
 ) {
     OutlinedButton(
-        modifier = modifier.padding(vertical = 4.dp), border = border, onClick = onClick
+        modifier = modifier.padding(vertical = 4.dp),
+        border = border,
+        onClick = onClick
     ) {
         AniFlowText(
-            modifier = Modifier.padding(vertical = 4.dp),
+            modifier = Modifier.padding(vertical = 8.dp),
             text = text,
             color = textColor,
         )
