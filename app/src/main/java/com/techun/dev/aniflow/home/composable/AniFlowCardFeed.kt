@@ -41,10 +41,10 @@ import com.techun.dev.aniflow.home.domain.model.NewsItem
 @Composable
 fun AniFlowCardFeed(
     modifier: Modifier = Modifier,
-    article: NewsItem,
+    item: NewsItem,
     featured: Boolean = false,
     onClick: (NewsItem) -> Unit,
-    onToggleFav: (Int) -> Unit
+    onToggleFav: (NewsItem) -> Unit
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
@@ -69,7 +69,7 @@ fun AniFlowCardFeed(
                 spotColor = tc.copy(alpha = 0.2f)
             ),
         shape = MaterialTheme.shapes.large,
-        onClick = { onClick(article) },
+        onClick = { onClick(item) },
         interactionSource = interactionSource
     ) {
         Column {
@@ -80,7 +80,7 @@ fun AniFlowCardFeed(
             ) {
                 //Banner Card
                 AniFlowAsyncImage(
-                    data = article.imageUrl,
+                    data = item.imageUrl,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()
                 )
@@ -109,8 +109,8 @@ fun AniFlowCardFeed(
 
                 //Fav
                 AniFlowFavoriteButton(
-                    isFav = false,
-                    onToggle = { /*onToggleFav(article.id)*/ },
+                    isFav = item.isFavorite,
+                    onToggle = { onToggleFav(item) },
                     modifier = Modifier
                         .align(Alignment.TopEnd)
                         .padding(8.dp)
@@ -125,14 +125,14 @@ fun AniFlowCardFeed(
                     ), verticalArrangement = Arrangement.spacedBy(6.dp)
             ) {
                 AniFlowText(
-                    text = article.title,
+                    text = item.title,
                     fontSize = if (featured) 16.sp else 13.sp,
                     fontWeight = FontWeight.Bold,
                     lineHeight = if (featured) 22.sp else 18.sp,
                     maxLines = 3
                 )
                 AniFlowText(
-                    text = article.description,
+                    text = item.description,
                     fontSize = 12.sp,
                     lineHeight = 18.sp,
                     style = MaterialTheme.typography.labelSmall,
@@ -143,7 +143,7 @@ fun AniFlowCardFeed(
                 Spacer(modifier = Modifier.height(2.dp))
                 CardFooter(
                     source = "MyAnimeList",
-                    timeAgo = article.pubDate,
+                    timeAgo = item.pubDate,
                     modifier = Modifier.fillMaxWidth()
                 )
             }
