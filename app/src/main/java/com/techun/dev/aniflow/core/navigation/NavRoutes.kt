@@ -15,6 +15,9 @@ sealed class NavRoutes : NavKey {
 
     @Serializable
     object Error : NavRoutes()
+
+    @Serializable
+    data class Detail(val newsItemId: String) : NavRoutes()
 }
 
 

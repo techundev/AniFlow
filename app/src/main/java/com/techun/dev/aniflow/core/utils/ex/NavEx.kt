@@ -1,4 +1,4 @@
-package com.techun.dev.aniflow.core.ex
+package com.techun.dev.aniflow.core.utils.ex
 
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey

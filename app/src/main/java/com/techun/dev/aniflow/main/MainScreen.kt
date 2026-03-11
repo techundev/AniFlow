@@ -5,7 +5,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.rememberNavBackStack
-import com.techun.dev.aniflow.core.ex.navigateTo
+import com.techun.dev.aniflow.core.utils.ex.navigateTo
 import com.techun.dev.aniflow.core.navigation.NavRoutes
 import com.techun.dev.aniflow.core.navigation.NavigationWrapper
 import com.techun.dev.aniflow.core.navigation.bottomNavItems
