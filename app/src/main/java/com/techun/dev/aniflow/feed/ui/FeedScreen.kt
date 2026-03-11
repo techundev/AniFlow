@@ -28,7 +28,9 @@ import com.techun.dev.aniflow.feed.domain.model.NewsItem
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun FeedScreen(viewModel: FeedViewModel = koinViewModel()) {
+fun FeedScreen(
+    viewModel: FeedViewModel = koinViewModel(), onNewsClick: (String) -> Unit
+) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Scaffold { innerPadding ->
@@ -53,9 +55,11 @@ fun FeedScreen(viewModel: FeedViewModel = koinViewModel()) {
                     FeedContent(
                         items = state.items,
                         onItemClick = { newsItem ->
-
+                            onNewsClick(newsItem)
                         },
-                        onToggleFav = { viewModel.toggleFavorite(it) })
+                        onToggleFav = {
+                            viewModel.toggleFavorite(it) }
+                    )
                 }
             }
         }
@@ -89,9 +93,7 @@ fun FeedError(
 
 @Composable
 fun FeedContent(
-    items: List<NewsItem>,
-    onItemClick: (NewsItem) -> Unit,
-    onToggleFav: (NewsItem) -> Unit
+    items: List<NewsItem>, onItemClick: (String) -> Unit, onToggleFav: (NewsItem) -> Unit
 ) {
     LazyColumn(
         contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)

@@ -43,7 +43,7 @@ fun AniFlowCardFeed(
     modifier: Modifier = Modifier,
     item: NewsItem,
     featured: Boolean = false,
-    onClick: (NewsItem) -> Unit,
+    onClick: (String) -> Unit,
     onToggleFav: (NewsItem) -> Unit
 ) {
     val interactionSource = remember { MutableInteractionSource() }
@@ -69,7 +69,7 @@ fun AniFlowCardFeed(
                 spotColor = tc.copy(alpha = 0.2f)
             ),
         shape = MaterialTheme.shapes.large,
-        onClick = { onClick(item) },
+        onClick = { onClick(item.id) },
         interactionSource = interactionSource
     ) {
         Column {
