@@ -36,3 +36,13 @@ fun NewsItem.toFavoriteItem() = FavoriteItem(
     imageUrl = imageUrl,
     savedAt = System.currentTimeMillis()
 )
+
+fun FavoriteItem.toNewsItem() = NewsItem(
+    id = id,
+    title = title,
+    link = link,
+    description = description,
+    pubDate = pubDate,
+    imageUrl = imageUrl,
+    isFavorite = true
+)

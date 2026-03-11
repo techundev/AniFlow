@@ -7,9 +7,11 @@ import com.techun.dev.aniflow.favorite.domain.usecase.GetFavoriteIdsUseCase
 import com.techun.dev.aniflow.favorite.domain.usecase.GetFavoritesUseCase
 import com.techun.dev.aniflow.favorite.domain.usecase.IsFavoriteUseCase
 import com.techun.dev.aniflow.favorite.domain.usecase.RemoveFavoriteUseCase
+import com.techun.dev.aniflow.favorite.ui.FavoritesViewModel
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 val favoritesDataModule = module {
@@ -22,4 +24,8 @@ val favoritesDomainModule = module {
     factoryOf(::GetFavoriteIdsUseCase)
     factoryOf(::IsFavoriteUseCase)
     factoryOf(::RemoveFavoriteUseCase)
+}
+
+val favoritesUiModule = module {
+    viewModelOf(::FavoritesViewModel)
 }

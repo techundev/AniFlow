@@ -40,6 +40,6 @@ val feedDomainModule = module {
     factoryOf(::SyncFeedUseCase)
 }
 
-val feedPresentationModule = module {
+val feedUiModule = module {
     viewModelOf(::FeedViewModel)
 }
