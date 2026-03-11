@@ -1,4 +1,4 @@
-package com.techun.dev.aniflow.home.domain.model
+package com.techun.dev.aniflow.feed.domain.model
 
 data class NewsItem(
     val id: String,

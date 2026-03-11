@@ -1,11 +1,11 @@
-package com.techun.dev.aniflow.home.data.repository
+package com.techun.dev.aniflow.feed.data.repository
 
 import com.techun.dev.aniflow.core.data.database.entity.toNewsItem
-import com.techun.dev.aniflow.home.data.database.FeedDao
-import com.techun.dev.aniflow.home.data.model.toEntity
-import com.techun.dev.aniflow.home.data.remote.FeedRemoteDataSource
-import com.techun.dev.aniflow.home.domain.model.NewsItem
-import com.techun.dev.aniflow.home.domain.repository.FeedRepository
+import com.techun.dev.aniflow.feed.data.database.FeedDao
+import com.techun.dev.aniflow.feed.data.model.toEntity
+import com.techun.dev.aniflow.feed.data.remote.FeedRemoteDataSource
+import com.techun.dev.aniflow.feed.domain.model.NewsItem
+import com.techun.dev.aniflow.feed.domain.repository.FeedRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -26,8 +26,4 @@ class FeedRepositoryImpl(
             Result.failure(e)
         }
     }
-
-//    override suspend fun toggleFavorite(id: Int, isFavorite: Boolean) {
-//        dao.toggleFavorite(id = id, isFavorite = isFavorite)
-//    }
 }

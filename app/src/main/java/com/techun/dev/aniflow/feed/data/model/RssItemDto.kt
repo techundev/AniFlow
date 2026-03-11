@@ -1,4 +1,4 @@
-package com.techun.dev.aniflow.home.data.model
+package com.techun.dev.aniflow.feed.data.model
 
 import com.techun.dev.aniflow.core.data.database.entity.RssItemEntity
 
@@ -20,5 +20,4 @@ fun RssItemDto.toEntity() = RssItemEntity(
     pubDate = pubDate,
     author = author,
     imageUrl = imageUrl,
-   // isFavorite = false
 )

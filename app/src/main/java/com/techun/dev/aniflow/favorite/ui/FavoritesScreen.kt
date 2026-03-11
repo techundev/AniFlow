@@ -22,7 +22,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.techun.dev.aniflow.core.components.AniFlowText
 import com.techun.dev.aniflow.favorite.data.mapper.toNewsItem
 import com.techun.dev.aniflow.favorite.domain.model.FavoriteItem
-import com.techun.dev.aniflow.home.composable.AniFlowCardFeed
+import com.techun.dev.aniflow.feed.composable.AniFlowCardFeed
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable

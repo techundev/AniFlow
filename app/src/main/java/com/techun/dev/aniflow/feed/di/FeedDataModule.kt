@@ -1,11 +1,11 @@
-package com.techun.dev.aniflow.home.di
+package com.techun.dev.aniflow.feed.di
 
-import com.techun.dev.aniflow.home.data.remote.FeedRemoteDataSource
-import com.techun.dev.aniflow.home.data.repository.FeedRepositoryImpl
-import com.techun.dev.aniflow.home.domain.repository.FeedRepository
-import com.techun.dev.aniflow.home.domain.usecase.GetFeedUseCase
-import com.techun.dev.aniflow.home.domain.usecase.SyncFeedUseCase
-import com.techun.dev.aniflow.home.ui.FeedViewModel
+import com.techun.dev.aniflow.feed.data.remote.FeedRemoteDataSource
+import com.techun.dev.aniflow.feed.data.repository.FeedRepositoryImpl
+import com.techun.dev.aniflow.feed.domain.repository.FeedRepository
+import com.techun.dev.aniflow.feed.domain.usecase.GetFeedUseCase
+import com.techun.dev.aniflow.feed.domain.usecase.SyncFeedUseCase
+import com.techun.dev.aniflow.feed.ui.FeedViewModel
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.HttpTimeout
