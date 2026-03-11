@@ -1,8 +1,12 @@
 package com.techun.dev.aniflow.detail.ui
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,15 +22,20 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.techun.dev.aniflow.core.components.AniFlowAsyncImage
+import com.techun.dev.aniflow.core.components.AniFlowButton
 import com.techun.dev.aniflow.core.components.AniFlowText
+import com.techun.dev.aniflow.feed.composable.AniFlowTagBadge
 import com.techun.dev.aniflow.feed.domain.model.NewsItem
 import org.koin.compose.viewmodel.koinViewModel
+import androidx.core.net.toUri
 
 @Composable
 fun DetailScreen(
@@ -37,6 +46,7 @@ fun DetailScreen(
     }
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
 
     Scaffold { innerPadding ->
         Box(
@@ -50,7 +60,13 @@ fun DetailScreen(
                 }
 
                 is DetailUiState.Success -> {
-                    DetailContent(newsItem = state.newsItem)
+                    DetailContent(
+                        newsItem = state.newsItem,
+                        onOpenLink = {
+                            val intent = Intent(Intent.ACTION_VIEW, state.newsItem.link.toUri())
+                            context.startActivity(intent)
+                        }
+                    )
                 }
 
                 is DetailUiState.Error -> {
@@ -65,7 +81,10 @@ fun DetailScreen(
 }
 
 @Composable
-fun DetailContent(newsItem: NewsItem) {
+fun DetailContent(
+    newsItem: NewsItem,
+    onOpenLink: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -82,11 +101,21 @@ fun DetailContent(newsItem: NewsItem) {
         Column(
             modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            AniFlowText(
-                text = newsItem.pubDate,
-                fontSize = 11.sp,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                AniFlowTagBadge(
+                    tag = "MAL News",
+                    color = Color(0xFFE879F9)
+                )
+                AniFlowText(
+                    text = newsItem.pubDate,
+                    fontSize = 11.sp,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
 
             AniFlowText(
                 text = newsItem.title,
@@ -100,6 +129,16 @@ fun DetailContent(newsItem: NewsItem) {
             AniFlowText(
                 text = newsItem.description, fontSize = 14.sp, lineHeight = 22.sp
             )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            AniFlowButton(
+                text = "Ver en MyAnimeList",
+                onclick = onOpenLink,
+                modifier = Modifier.fillMaxWidth(),
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }

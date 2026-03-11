@@ -26,7 +26,6 @@ fun AniFlowButton(
     Button(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
             .shadow(
                 elevation = if (enabled) 8.dp else 0.dp,
                 shape = MaterialTheme.shapes.extraLarge,

@@ -6,8 +6,8 @@ import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
-import com.techun.dev.aniflow.core.ex.back
-import com.techun.dev.aniflow.core.ex.navigateTo
+import com.techun.dev.aniflow.core.utils.ex.back
+import com.techun.dev.aniflow.core.utils.ex.navigateTo
 import com.techun.dev.aniflow.core.navigation.NavRoutes.Error
 import com.techun.dev.aniflow.core.navigation.NavRoutes.Favorites
 import com.techun.dev.aniflow.core.navigation.NavRoutes.Home
