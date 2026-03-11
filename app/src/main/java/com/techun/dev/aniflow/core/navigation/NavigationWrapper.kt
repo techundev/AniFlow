@@ -16,7 +16,7 @@ import com.techun.dev.aniflow.core.navigation.NavRoutes.Detail
 import com.techun.dev.aniflow.detail.ui.DetailScreen
 import com.techun.dev.aniflow.favorite.ui.FavoritesScreen
 import com.techun.dev.aniflow.feed.ui.FeedScreen
-import com.techun.dev.aniflow.profile.ProfileScreen
+import com.techun.dev.aniflow.profile.ui.ProfileScreen
 
 @Composable
 fun NavigationWrapper(
