@@ -9,6 +9,8 @@ import com.techun.dev.aniflow.core.utils.ex.navigateTo
 import com.techun.dev.aniflow.core.navigation.NavRoutes
 import com.techun.dev.aniflow.core.navigation.NavigationWrapper
 import com.techun.dev.aniflow.core.navigation.bottomNavItems
+import com.techun.dev.aniflow.core.utils.ex.back
+import com.techun.dev.aniflow.core.utils.ex.backTo
 import com.techun.dev.aniflow.main.composables.AniFlowAppBottomBar
 
 @Composable
@@ -24,7 +26,11 @@ fun MainScreen() {
                     currentRoute = currentRoute,
                     onItemSelected = { route ->
                         if (currentRoute != route) {
-                            backStack.navigateTo(route)
+                            if (route in backStack) {
+                                backStack.backTo(route)
+                            } else {
+                                backStack.navigateTo(route)
+                            }
                         }
                     }
                 )

@@ -24,9 +24,13 @@ fun NavigationWrapper(
     backStack: NavBackStack<NavKey>, modifier: Modifier = Modifier
 ) {
     NavDisplay(backStack = backStack, modifier = modifier, onBack = {
-        if (backStack.lastOrNull() !is Home) {
-            backStack.clear()
-            backStack.add(Home)
+        when {
+            backStack.lastOrNull() is Home -> false
+            else -> {
+                backStack.clear()
+                backStack.add(Home)
+                true
+            }
         }
     }, entryProvider = entryProvider {
         entry<Home> {
