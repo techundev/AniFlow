@@ -4,12 +4,15 @@ import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
@@ -35,7 +38,7 @@ import com.techun.dev.aniflow.core.components.AniFlowButtonSecondary
 import com.techun.dev.aniflow.core.components.AniFlowText
 import com.techun.dev.aniflow.core.utils.readingTimeMinutes
 import com.techun.dev.aniflow.core.utils.toReadableDate
-import com.techun.dev.aniflow.feed.composable.AniFlowCardFeed
+import com.techun.dev.aniflow.detail.components.AniFlowRelatedCard
 import com.techun.dev.aniflow.feed.composable.AniFlowFavoriteButton
 import com.techun.dev.aniflow.feed.composable.AniFlowTagBadge
 import com.techun.dev.aniflow.feed.domain.model.NewsItem
@@ -43,7 +46,9 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun DetailScreen(
-    newsItemId: String, viewModel: DetailsViewModel = koinViewModel()
+    newsItemId: String,
+    onRelatedClick: (String) -> Unit,
+    viewModel: DetailsViewModel = koinViewModel()
 ) {
     LaunchedEffect(newsItemId) {
         viewModel.loadNewsItem(id = newsItemId)
@@ -74,15 +79,17 @@ fun DetailScreen(
                         },
                         onShare = {
                             val intent = Intent(Intent.ACTION_SEND).apply {
-                                type ="text/plain"
+                                type = "text/plain"
                                 putExtra(Intent.EXTRA_SUBJECT, state.newsItem.title)
                                 putExtra(Intent.EXTRA_TEXT, state.newsItem.link)
                             }
-                            context.startActivity(Intent.createChooser(intent,"Compartir via"))
+                            context.startActivity(Intent.createChooser(intent, "Compartir via"))
                         },
                         onToggleFav = {
                             viewModel.toggleFavorite(state.newsItem)
-                        })
+                        },
+                        onRelatedClick = onRelatedClick
+                    )
                 }
 
                 is DetailUiState.Error -> {
@@ -102,7 +109,8 @@ fun DetailContent(
     related: List<NewsItem>,
     onOpenLink: () -> Unit,
     onShare: () -> Unit,
-    onToggleFav: () -> Unit
+    onToggleFav: () -> Unit,
+    onRelatedClick: (String) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -185,13 +193,20 @@ fun DetailContent(
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
-                related.forEach { relatedItem ->
-                    AniFlowCardFeed(
-                        item = relatedItem,
-                        featured = false,
-                        onClick = {},
-                        onToggleFav = {}
-                    )
+                Spacer(modifier = Modifier.height(8.dp))
+                LazyRow(
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    contentPadding = PaddingValues(horizontal = 2.dp)
+                ) {
+                    items(
+                        items = related,
+                        key = { it.id }
+                    ) { relatedItem ->
+                        AniFlowRelatedCard(
+                            newsItem = relatedItem,
+                            onClick = { onRelatedClick(it.id) }
+                        )
+                    }
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))

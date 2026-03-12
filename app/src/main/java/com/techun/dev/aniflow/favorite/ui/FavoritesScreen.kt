@@ -27,6 +27,7 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun FavoritesScreen(
+    onNewsClick: (String) -> Unit,
     viewModel: FavoritesViewModel = koinViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -52,7 +53,8 @@ fun FavoritesScreen(
 
                 is FavoritesUiState.Success -> {
                     FavoritesContent(
-                        items = state.items
+                        items = state.items,
+                        onClick = onNewsClick
                     )
                 }
             }
@@ -62,7 +64,8 @@ fun FavoritesScreen(
 
 @Composable
 fun FavoritesContent(
-    items: List<FavoriteItem>
+    items: List<FavoriteItem>,
+    onClick: (String) -> Unit
 ) {
     LazyColumn(
         contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -74,7 +77,7 @@ fun FavoritesContent(
             AniFlowCardFavorites(
                 item = favoriteItem.toNewsItem(),
                 featured = favoriteItem.id == items.first().id,
-                onClick = {}
+                onClick = onClick
             )
         }
     }
