@@ -13,17 +13,21 @@ import com.techun.dev.aniflow.core.navigation.NavRoutes.Favorites
 import com.techun.dev.aniflow.core.navigation.NavRoutes.Home
 import com.techun.dev.aniflow.core.navigation.NavRoutes.Profile
 import com.techun.dev.aniflow.core.navigation.NavRoutes.Detail
+import com.techun.dev.aniflow.core.utils.ex.navigateAndClear
 import com.techun.dev.aniflow.detail.ui.DetailScreen
 import com.techun.dev.aniflow.favorite.ui.FavoritesScreen
 import com.techun.dev.aniflow.feed.ui.FeedScreen
-import com.techun.dev.aniflow.profile.ProfileScreen
+import com.techun.dev.aniflow.profile.ui.ProfileScreen
 
 @Composable
 fun NavigationWrapper(
     backStack: NavBackStack<NavKey>, modifier: Modifier = Modifier
 ) {
     NavDisplay(backStack = backStack, modifier = modifier, onBack = {
-        backStack.back()
+        if (backStack.lastOrNull() !is Home) {
+            backStack.clear()
+            backStack.add(Home)
+        }
     }, entryProvider = entryProvider {
         entry<Home> {
             FeedScreen(

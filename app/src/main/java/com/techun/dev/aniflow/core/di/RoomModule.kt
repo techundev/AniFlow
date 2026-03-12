@@ -17,4 +17,5 @@ val roomModule = module {
     single { get<NewsDatabase>().feedDao() }
     single { get<NewsDatabase>().favoritesDao() }
     single { get<NewsDatabase>().detailsDao() }
+    single { get<NewsDatabase>().profileDao() }
 }
