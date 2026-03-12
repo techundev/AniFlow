@@ -26,6 +26,7 @@ fun NavigationWrapper(
     NavDisplay(backStack = backStack, modifier = modifier, onBack = {
         when {
             backStack.lastOrNull() is Home -> false
+            backStack.lastOrNull() is Detail -> backStack.back()
             else -> {
                 backStack.clear()
                 backStack.add(Home)
@@ -49,7 +50,12 @@ fun NavigationWrapper(
         }
 
         entry<Detail> { entry ->
-            DetailScreen(newsItemId = entry.newsItemId)
+            DetailScreen(
+                newsItemId = entry.newsItemId,
+                onRelatedClick = { itemId ->
+                    backStack.navigateTo(Detail(newsItemId = itemId))
+                }
+            )
         }
         entry<Error> { }
     })
