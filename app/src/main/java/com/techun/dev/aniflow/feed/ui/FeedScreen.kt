@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -27,11 +29,13 @@ import com.techun.dev.aniflow.feed.composable.AniFlowCardFeed
 import com.techun.dev.aniflow.feed.domain.model.NewsItem
 import org.koin.compose.viewmodel.koinViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FeedScreen(
     viewModel: FeedViewModel = koinViewModel(), onNewsClick: (String) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val isRefreshing by viewModel.isRefreshing.collectAsStateWithLifecycle()
 
     Scaffold { innerPadding ->
         Box(
@@ -52,14 +56,18 @@ fun FeedScreen(
                 }
 
                 is FeedUiState.Success -> {
-                    FeedContent(
-                        items = state.items,
-                        onItemClick = { newsItem ->
-                            onNewsClick(newsItem)
-                        },
-                        onToggleFav = {
-                            viewModel.toggleFavorite(it) }
-                    )
+                    PullToRefreshBox(
+                        isRefreshing = isRefreshing,
+                        onRefresh = { viewModel.refresh() },
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        FeedContent(
+                            items = state.items,
+                            onItemClick = { newsItem -> onNewsClick(newsItem) },
+                            onToggleFav = { viewModel.toggleFavorite(it) }
+                        )
+                    }
+
                 }
             }
         }
