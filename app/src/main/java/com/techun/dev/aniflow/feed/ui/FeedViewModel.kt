@@ -25,6 +25,9 @@ class FeedViewModel(
     private val _uiState = MutableStateFlow<FeedUiState>(FeedUiState.Loading)
     val uiState: StateFlow<FeedUiState> = _uiState.asStateFlow()
 
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
+
     init {
         observeFeed()
         syncFeed()
@@ -55,6 +58,17 @@ class FeedViewModel(
                 )
             }
         }
+    }
+
+    fun refresh() = viewModelScope.launch {
+        _isRefreshing.value = true
+        syncFeedUseCase()
+            .onFailure { error ->
+                if (_uiState.value is FeedUiState.Loading) {
+                    _uiState.value = FeedUiState.Error(error.message ?: "Error desconocido")
+                }
+            }
+        _isRefreshing.value = false
     }
 
     fun toggleFavorite(item: NewsItem) = viewModelScope.launch {
