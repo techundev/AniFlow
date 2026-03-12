@@ -8,6 +8,7 @@ import com.techun.dev.aniflow.favorite.domain.usecase.GetFavoriteIdsUseCase
 import com.techun.dev.aniflow.favorite.domain.usecase.RemoveFavoriteUseCase
 import com.techun.dev.aniflow.feed.domain.model.NewsItem
 import com.techun.dev.aniflow.feed.domain.usecase.GetFeedUseCase
+import com.techun.dev.aniflow.feed.domain.usecase.GetNewsPagedUseCase
 import com.techun.dev.aniflow.feed.domain.usecase.SyncFeedUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,17 +21,58 @@ class FeedViewModel(
     private val syncFeedUseCase: SyncFeedUseCase,
     private val getFavoriteIdsUseCase: GetFavoriteIdsUseCase,
     private val addFavoriteUseCase: AddFavoriteUseCase,
-    private val removeFavoriteUseCase: RemoveFavoriteUseCase
+    private val removeFavoriteUseCase: RemoveFavoriteUseCase,
+    private val getNewsPagedUseCase: GetNewsPagedUseCase
 ) : ViewModel() {
+    companion object {
+        private const val PAGE_SIZE = 10
+    }
+
     private val _uiState = MutableStateFlow<FeedUiState>(FeedUiState.Loading)
     val uiState: StateFlow<FeedUiState> = _uiState.asStateFlow()
+
+    private val _isLoadingMore = MutableStateFlow(false)
+    val isLoadingMore: StateFlow<Boolean> = _isLoadingMore.asStateFlow()
+
+    private val _hasMoreItems = MutableStateFlow(true)
+    val hasMoreItems: StateFlow<Boolean> = _hasMoreItems.asStateFlow()
 
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
 
+    private val _pagedItems = MutableStateFlow<List<NewsItem>>(emptyList())
+
+    private var currentOffset = 0
+
     init {
         observeFeed()
         syncFeed()
+        loadNextPage()
+    }
+
+    fun loadNextPage() {
+        if (_isLoadingMore.value || !_hasMoreItems.value) return
+
+        viewModelScope.launch {
+            _isLoadingMore.value = true
+
+            val newItems = getNewsPagedUseCase(
+                limit = PAGE_SIZE,
+                offset = currentOffset
+            )
+
+            if (newItems.isEmpty()) {
+                _hasMoreItems.value = false
+            } else {
+                _pagedItems.value += newItems
+                currentOffset += newItems.size
+
+                if (newItems.size < PAGE_SIZE) {
+                    _hasMoreItems.value = false
+                }
+            }
+            _isLoadingMore.value = false
+        }
     }
 
     private fun observeFeed() = viewModelScope.launch {
@@ -51,24 +93,32 @@ class FeedViewModel(
     }
 
     fun syncFeed() = viewModelScope.launch {
-        syncFeedUseCase().onFailure { error ->
-            if (_uiState.value is FeedUiState.Loading) {
-                _uiState.value = FeedUiState.Error(
-                    error.message ?: "Error desconocido"
-                )
+        syncFeedUseCase()
+            .onSuccess {
+                resetPagination()
             }
-        }
+            .onFailure { error ->
+                if (_uiState.value is FeedUiState.Loading) {
+                    _uiState.value = FeedUiState.Error(
+                        error.message ?: "Error desconocido"
+                    )
+                }
+            }
     }
 
     fun refresh() = viewModelScope.launch {
         _isRefreshing.value = true
         syncFeedUseCase()
-            .onFailure { error ->
-                if (_uiState.value is FeedUiState.Loading) {
-                    _uiState.value = FeedUiState.Error(error.message ?: "Error desconocido")
-                }
-            }
-        _isRefreshing.value = false
+            .onSuccess { resetPagination() }
+            .onFailure { _isLoadingMore.value = false }
+    }
+
+    fun resetPagination() {
+        currentOffset = 0
+        _hasMoreItems.value = true
+        _pagedItems.value = emptyList()
+        _isLoadingMore.value = false
+        loadNextPage()
     }
 
     fun toggleFavorite(item: NewsItem) = viewModelScope.launch {

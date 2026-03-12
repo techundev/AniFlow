@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FeedDao {
+    @Query("SELECT * FROM rssitem ORDER BY pubDate DESC LIMIT :limit OFFSET :offset")
+    suspend fun getNewsPaged(limit: Int, offset: Int): List<RssItemEntity>
+
     @Query("SELECT * FROM RssItem")
     fun getAllNews(): Flow<List<RssItemEntity>>
 
