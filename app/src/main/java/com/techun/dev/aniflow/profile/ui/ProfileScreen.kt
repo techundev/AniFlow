@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.techun.dev.aniflow.core.components.AniFlowAsyncImage
 import com.techun.dev.aniflow.core.components.AniFlowText
+import com.techun.dev.aniflow.profile.components.AniFlowStatCard
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -52,7 +53,7 @@ fun ProfileScreen(
     if (uiState.isEditingName) {
         EditNameDialog(
             currentName = uiState.userName,
-            onConfirm = {viewModel.updateUserName(it)},
+            onConfirm = { viewModel.updateUserName(it) },
             onDismiss = { viewModel.hideEditName() })
     }
 
@@ -174,13 +175,13 @@ private fun ProfileStatsSection(
         Row(
             modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            StatCard(
+            AniFlowStatCard(
                 modifier = Modifier.weight(1f),
                 label = "Noticias",
                 value = totalNews.toString(),
                 emoji = "📰"
             )
-            StatCard(
+            AniFlowStatCard(
                 modifier = Modifier.weight(1f),
                 label = "Favoritos",
                 value = totalFavorites.toString(),
@@ -191,33 +192,8 @@ private fun ProfileStatsSection(
 }
 
 @Composable
-private fun StatCard(
-    modifier: Modifier = Modifier, label: String, value: String, emoji: String
-) {
-    Card(modifier = modifier) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(4.dp)
-        ) {
-            AniFlowText(text = emoji, fontSize = 24.sp)
-            AniFlowText(
-                text = value, fontSize = 22.sp, fontWeight = FontWeight.Bold
-            )
-            AniFlowText(
-                text = label, fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-    }
-}
-
-@Composable
 private fun EditNameDialog(
-    currentName: String,
-    onConfirm: (String) -> Unit,
-    onDismiss: () -> Unit
+    currentName: String, onConfirm: (String) -> Unit, onDismiss: () -> Unit
 ) {
     var text by remember { mutableStateOf(currentName) }
 
@@ -241,6 +217,5 @@ private fun EditNameDialog(
             TextButton(onClick = onDismiss) {
                 AniFlowText(text = "Cancelar")
             }
-        }
-    )
+        })
 }

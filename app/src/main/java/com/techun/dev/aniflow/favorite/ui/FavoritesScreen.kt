@@ -20,9 +20,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.techun.dev.aniflow.core.components.AniFlowText
+import com.techun.dev.aniflow.favorite.components.AniFlowCardFavorites
 import com.techun.dev.aniflow.favorite.data.mapper.toNewsItem
 import com.techun.dev.aniflow.favorite.domain.model.FavoriteItem
-import com.techun.dev.aniflow.feed.composable.AniFlowCardFeed
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -52,7 +52,8 @@ fun FavoritesScreen(
 
                 is FavoritesUiState.Success -> {
                     FavoritesContent(
-                        items = state.items, onRemove = { viewModel.removeFavorites(it) })
+                        items = state.items
+                    )
                 }
             }
         }
@@ -61,7 +62,7 @@ fun FavoritesScreen(
 
 @Composable
 fun FavoritesContent(
-    items: List<FavoriteItem>, onRemove: (String) -> Unit
+    items: List<FavoriteItem>
 ) {
     LazyColumn(
         contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -70,11 +71,10 @@ fun FavoritesContent(
             items = items,
             key = { it.id }
         ) { favoriteItem ->
-            AniFlowCardFeed(
+            AniFlowCardFavorites(
                 item = favoriteItem.toNewsItem(),
                 featured = favoriteItem.id == items.first().id,
-                onClick = {},
-                onToggleFav = {onRemove(favoriteItem.id)}
+                onClick = {}
             )
         }
     }
