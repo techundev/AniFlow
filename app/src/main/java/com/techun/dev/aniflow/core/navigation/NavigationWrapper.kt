@@ -42,7 +42,11 @@ fun NavigationWrapper(
         }
 
         entry<Favorites> {
-            FavoritesScreen()
+            FavoritesScreen(
+                onNewsClick = { itemId ->
+                    backStack.navigateTo(Detail(newsItemId = itemId))
+                }
+            )
         }
 
         entry<Profile> {
