@@ -9,7 +9,6 @@ import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -35,6 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.techun.dev.aniflow.core.components.AniFlowAsyncImage
+import com.techun.dev.aniflow.core.components.AniFlowCardFooter
 import com.techun.dev.aniflow.core.components.AniFlowText
 import com.techun.dev.aniflow.feed.domain.model.NewsItem
 
@@ -141,10 +141,8 @@ fun AniFlowCardFeed(
                 Spacer(modifier = Modifier.height(4.dp))
                 HorizontalDivider(modifier = Modifier.fillMaxWidth(), thickness = 1.dp)
                 Spacer(modifier = Modifier.height(2.dp))
-                CardFooter(
-                    source = "MyAnimeList",
-                    timeAgo = item.pubDate,
-                    modifier = Modifier.fillMaxWidth()
+                AniFlowCardFooter(
+                    timeAgo = item.pubDate, modifier = Modifier.fillMaxWidth()
                 )
             }
         }
@@ -168,7 +166,7 @@ fun AniFlowFavoriteButton(
             .scale(scale)
             .clip(CircleShape)
             .background(
-                if (isFav) AccentPink.copy(alpha = 0.2f)
+                if (isFav) MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
                 else Color.Black.copy(alpha = 0.4f)
             )
             .clickable(
@@ -199,43 +197,6 @@ fun AniFlowTagBadge(
             fontSize = 10.sp,
             fontWeight = FontWeight.Bold,
             letterSpacing = 0.08.sp
-        )
-    }
-}
-
-
-private val AccentPink = Color(0xFFE879F9)
-private val AccentBlue = Color(0xFF38BDF8)
-
-@Composable
-private fun CardFooter(
-    modifier: Modifier, source: String, timeAgo: String
-) {
-    Row(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(6.dp)
-        ) {
-            AniFlowAsyncImage(
-                data = "", modifier = Modifier
-                    .size(18.dp)
-                    .clip(CircleShape)
-                    .background(
-                        Brush.linearGradient(
-                            colors = listOf(AccentPink, AccentBlue)
-                        )
-                    )
-            )
-            AniFlowText(
-                text = source, style = MaterialTheme.typography.labelSmall, fontSize = 10.sp
-            )
-        }
-        AniFlowText(
-            text = timeAgo, fontSize = 10.sp
         )
     }
 }
