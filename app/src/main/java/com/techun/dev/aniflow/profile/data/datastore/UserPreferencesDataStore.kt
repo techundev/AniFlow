@@ -13,13 +13,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
+    name = "user_preferences"
+)
+
 class UserPreferencesDataStore(
     private val context: Context
 ) {
-    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
-        name = "user_preferences"
-    )
-
     private object Keys {
         val USER_NAME = stringPreferencesKey("user_name")
         val AVATAR_URL = stringPreferencesKey("avatar_url")

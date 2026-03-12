@@ -7,10 +7,12 @@ import com.techun.dev.aniflow.profile.domain.usecase.GetProfileStatsUseCase
 import com.techun.dev.aniflow.profile.domain.usecase.GetUserPreferencesUseCase
 import com.techun.dev.aniflow.profile.domain.usecase.UpdateAvatarUrlUseCase
 import com.techun.dev.aniflow.profile.domain.usecase.UpdateUserNameUseCase
+import com.techun.dev.aniflow.profile.ui.ProfileViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 val profileDataModule = module {
@@ -22,4 +24,8 @@ val profileDomainModule = module {
     factoryOf(::UpdateUserNameUseCase)
     factoryOf(::UpdateAvatarUrlUseCase)
     factoryOf(::GetProfileStatsUseCase)
+}
+
+val profileUiModule = module {
+    viewModelOf(::ProfileViewModel)
 }
