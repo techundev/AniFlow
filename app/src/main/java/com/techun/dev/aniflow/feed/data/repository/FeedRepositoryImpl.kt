@@ -10,7 +10,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class FeedRepositoryImpl(
-    private val remoteDataSource: FeedRemoteDataSource, private val dao: FeedDao
+    private val remoteDataSource: FeedRemoteDataSource,
+    private val dao: FeedDao
 ) : FeedRepository {
     override fun getFeed(): Flow<List<NewsItem>> {
         return dao.getAllNews().map { entities -> entities.map { it.toNewsItem() } }
@@ -25,5 +26,12 @@ class FeedRepositoryImpl(
         } catch (e: Exception) {
             Result.failure(e)
         }
+    }
+
+    override suspend fun getNewsPaged(
+        limit: Int,
+        offset: Int
+    ): List<NewsItem> {
+        return dao.getNewsPaged(limit,offset).map{it.toNewsItem()}
     }
 }

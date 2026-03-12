@@ -4,6 +4,7 @@ import com.techun.dev.aniflow.feed.data.remote.FeedRemoteDataSource
 import com.techun.dev.aniflow.feed.data.repository.FeedRepositoryImpl
 import com.techun.dev.aniflow.feed.domain.repository.FeedRepository
 import com.techun.dev.aniflow.feed.domain.usecase.GetFeedUseCase
+import com.techun.dev.aniflow.feed.domain.usecase.GetNewsPagedUseCase
 import com.techun.dev.aniflow.feed.domain.usecase.SyncFeedUseCase
 import com.techun.dev.aniflow.feed.ui.FeedViewModel
 import io.ktor.client.HttpClient
@@ -38,6 +39,7 @@ val feedDataModule = module {
 val feedDomainModule = module {
     factoryOf(::GetFeedUseCase)
     factoryOf(::SyncFeedUseCase)
+    factoryOf(::GetNewsPagedUseCase)
 }
 
 val feedUiModule = module {
