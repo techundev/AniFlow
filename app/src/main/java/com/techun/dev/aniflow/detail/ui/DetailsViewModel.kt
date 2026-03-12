@@ -10,10 +10,14 @@ import com.techun.dev.aniflow.favorite.domain.usecase.RemoveFavoriteUseCase
 import com.techun.dev.aniflow.feed.domain.model.NewsItem
 import com.techun.dev.aniflow.feed.domain.usecase.GetFeedUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class DetailsViewModel(
@@ -23,25 +27,37 @@ class DetailsViewModel(
     private val removeFavoriteUseCase: RemoveFavoriteUseCase,
     private val getFavoriteIdsUseCase: GetFavoriteIdsUseCase
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow<DetailUiState>(DetailUiState.Loading)
-    val uiState: StateFlow<DetailUiState> = _uiState.asStateFlow()
+    private val _newsItemId = MutableStateFlow<String?>(null)
 
     private val _related = MutableStateFlow<List<NewsItem>>(emptyList())
     var related: StateFlow<List<NewsItem>> = _related.asStateFlow()
 
-    fun loadNewsItem(id: String) = viewModelScope.launch {
-        combine(
-            flow { emit(getNewsItemByIdUseCase(id)) }, getFavoriteIdsUseCase()
-        ) { newsItem, favoriteIds ->
-            newsItem?.copy(isFavorite = newsItem.id in favoriteIds)
-        }.collect { newsItem ->
-            if (newsItem != null) {
-                _uiState.value = DetailUiState.Success(newsItem)
-                loadRelated(newsItem)
-            } else {
-                _uiState.value = DetailUiState.Error("Artículo no encontrado")
+    val uiState: StateFlow<DetailUiState> = _newsItemId
+        .filterNotNull()
+        .flatMapLatest { id ->
+            _related.value = emptyList()
+            combine(
+                flow { emit(getNewsItemByIdUseCase(id)) },
+                getFavoriteIdsUseCase()
+            ) { newsItem, favoriteIds ->
+                if (newsItem != null) {
+                    loadRelated(newsItem)
+                    DetailUiState.Success(
+                        newsItem.copy(isFavorite = newsItem.id in favoriteIds)
+                    )
+                } else {
+                    DetailUiState.Error("Artículo no encontrado")
+                }
             }
         }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = DetailUiState.Loading
+        )
+
+    fun loadNewsItem(id: String) {
+        _newsItemId.value = id
     }
 
     private fun loadRelated(newsItem: NewsItem) = viewModelScope.launch {
@@ -63,9 +79,9 @@ class DetailsViewModel(
     }
 
     fun toggleFavorite(newsItem: NewsItem) = viewModelScope.launch {
-        if (newsItem.isFavorite){
+        if (newsItem.isFavorite) {
             removeFavoriteUseCase(newsItem.id)
-        }else{
+        } else {
             addFavoriteUseCase(newsItem.toFavoriteItem())
         }
     }
