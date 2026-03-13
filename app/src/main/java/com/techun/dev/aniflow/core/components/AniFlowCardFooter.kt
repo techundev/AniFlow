@@ -11,8 +11,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.techun.dev.aniflow.R
 
 @Composable
 fun AniFlowCardFooter(
@@ -28,17 +30,14 @@ fun AniFlowCardFooter(
             horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             AniFlowAsyncImage(
-                data = "", modifier = Modifier
+                data = when (source) {
+                    "MAL" -> R.drawable.myanimelist_logo
+                    "CR" -> R.drawable.crunchyroll_logo
+                    else -> R.drawable.crunchyroll_logo
+                }, modifier = Modifier
                     .size(18.dp)
                     .clip(CircleShape)
-                    .background(
-                        Brush.linearGradient(
-                            colors = listOf(
-                                MaterialTheme.colorScheme.primary,
-                                MaterialTheme.colorScheme.tertiary
-                            )
-                        )
-                    )
+                    .background(MaterialTheme.colorScheme.onPrimary)
             )
             AniFlowText(
                 text = source, style = MaterialTheme.typography.labelSmall, fontSize = 10.sp

@@ -100,9 +100,12 @@ fun AniFlowCardFeed(
 
                 //Chip
                 AniFlowTagBadge(
-                    tag = "MAL News",
-                    color = tc,
-                    modifier = Modifier
+                    tag = item.source,
+                    color = when (item.source) {
+                        "MAL" -> Color(0xFFE879F9)
+                        "CR" -> Color(0xFFF97316)
+                        else -> Color(0xFFE879F9)
+                    }, modifier = Modifier
                         .align(Alignment.TopStart)
                         .padding(10.dp)
                 )
@@ -142,7 +145,9 @@ fun AniFlowCardFeed(
                 HorizontalDivider(modifier = Modifier.fillMaxWidth(), thickness = 1.dp)
                 Spacer(modifier = Modifier.height(2.dp))
                 AniFlowCardFooter(
-                    timeAgo = item.pubDate, modifier = Modifier.fillMaxWidth()
+                    source = item.source,
+                    timeAgo = item.pubDate,
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
         }

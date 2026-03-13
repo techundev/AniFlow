@@ -13,15 +13,6 @@ data class RssItemEntity(
     val pubDate: String? = null,
     val author: String? = null,
     val imageUrl: String? = null,
-    //val isFavorite: Boolean? = null
+    val source: String = "MAL"
 )
 
-fun RssItemEntity.toNewsItem() = NewsItem(
-    id = id,
-    title = title.orEmpty(),
-    link = link.orEmpty(),
-    description = description.orEmpty(),
-    pubDate = pubDate.orEmpty(),
-    imageUrl = imageUrl.orEmpty(),
-    isFavorite = false
-)

@@ -110,7 +110,14 @@ class FeedViewModel(
         _isRefreshing.value = true
         syncFeedUseCase()
             .onSuccess { resetPagination() }
-            .onFailure { _isLoadingMore.value = false }
+            .onFailure { error ->
+                if (_uiState.value is FeedUiState.Loading) {
+                    _uiState.value = FeedUiState.Error(
+                        error.message ?: "Error desconocido"
+                    )
+                }
+            }
+        _isRefreshing.value = false
     }
 
     fun resetPagination() {

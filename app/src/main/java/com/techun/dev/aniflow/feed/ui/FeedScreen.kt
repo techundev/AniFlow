@@ -123,16 +123,16 @@ fun FeedContent(
 ) {
     val listState = rememberLazyListState()
 
-    val shouldLoadMore by remember {
+    val shouldLoadMore by remember(hasMoreItems) {
         derivedStateOf {
             val lastVisibleItem = listState.layoutInfo.visibleItemsInfo.lastOrNull()
             val totalItems = listState.layoutInfo.totalItemsCount
-            lastVisibleItem != null && lastVisibleItem.index >= totalItems - 3
+            lastVisibleItem != null && lastVisibleItem.index >= totalItems - 3 && hasMoreItems
         }
     }
 
-    LaunchedEffect(shouldLoadMore) {
-        if (shouldLoadMore && hasMoreItems && !isLoadingMore) {
+    LaunchedEffect(shouldLoadMore, isLoadingMore) {
+        if (shouldLoadMore && !isLoadingMore) {
             onLoadMore()
         }
     }

@@ -1,6 +1,11 @@
 package com.techun.dev.aniflow.detail.ui
 
+import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,7 +35,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.techun.dev.aniflow.core.components.AniFlowAsyncImage
 import com.techun.dev.aniflow.core.components.AniFlowButton
@@ -74,8 +78,7 @@ fun DetailScreen(
                         newsItem = state.newsItem,
                         related = related,
                         onOpenLink = {
-                            val intent = Intent(Intent.ACTION_VIEW, state.newsItem.link.toUri())
-                            context.startActivity(intent)
+                            openLink(context = context, url = state.newsItem.link)
                         },
                         onShare = {
                             val intent = Intent(Intent.ACTION_SEND).apply {
@@ -100,6 +103,26 @@ fun DetailScreen(
                 }
             }
         }
+    }
+}
+
+private fun openLink(context: Context, url: String) {
+    if (url.isBlank()) return
+    try {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url)).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        if (intent.resolveActivity(context.packageManager) != null) {
+            context.startActivity(intent)
+        } else {
+            val chooser = Intent.createChooser(intent, "Abrir con...")
+            chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.startActivity(chooser)
+        }
+    } catch (e: ActivityNotFoundException) {
+        Log.e("DetailScreen", "No app found to open: $url")
+        Toast.makeText(context, "No se encontró una app para abrir el link", Toast.LENGTH_SHORT)
+            .show()
     }
 }
 
@@ -147,7 +170,7 @@ fun DetailContent(
                     tag = "MAL News", color = Color(0xFFE879F9)
                 )
                 AniFlowText(
-                    text = newsItem.pubDate.toReadableDate(),
+                    text = newsItem.pubDate,
                     fontSize = 11.sp,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
