@@ -37,6 +37,8 @@ import com.techun.dev.aniflow.core.components.AniFlowAsyncImage
 import com.techun.dev.aniflow.core.components.AniFlowCardFooter
 import com.techun.dev.aniflow.core.components.AniFlowText
 import com.techun.dev.aniflow.feed.domain.model.NewsItem
+import com.techun.dev.aniflow.ui.theme.SourceCR
+import com.techun.dev.aniflow.ui.theme.SourceMAL
 
 @Composable
 fun AniFlowCardFeed(
@@ -56,7 +58,7 @@ fun AniFlowCardFeed(
     )
 
     val imageHeight = if (featured) 220.dp else 170.dp
-    val tc = Color(0xFFE879F9)/*tagColor(article.tag)*/
+    val tc = MaterialTheme.colorScheme.onPrimaryContainer
 
     Card(
         modifier = modifier
@@ -102,9 +104,9 @@ fun AniFlowCardFeed(
                 AniFlowTagBadge(
                     tag = item.source,
                     color = when (item.source) {
-                        "MAL" -> Color(0xFFE879F9)
-                        "CR" -> Color(0xFFF97316)
-                        else -> Color(0xFFE879F9)
+                        "MAL" -> SourceMAL
+                        "CR" -> SourceCR
+                        else -> SourceMAL
                     }, modifier = Modifier
                         .align(Alignment.TopStart)
                         .padding(10.dp)

@@ -39,7 +39,8 @@ import org.koin.compose.viewmodel.koinViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FeedScreen(
-    onNewsClick: (String) -> Unit, viewModel: FeedViewModel = koinViewModel()
+    onNewsClick: (String) -> Unit,
+    viewModel: FeedViewModel = koinViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val isRefreshing by viewModel.isRefreshing.collectAsStateWithLifecycle()
