@@ -39,8 +39,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FeedScreen(
-    onNewsClick: (String) -> Unit,
-    viewModel: FeedViewModel = koinViewModel()
+    onNewsClick: (String) -> Unit, viewModel: FeedViewModel = koinViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val isRefreshing by viewModel.isRefreshing.collectAsStateWithLifecycle()
@@ -77,8 +76,7 @@ fun FeedScreen(
                             hasMoreItems = hasMoreItems,
                             onItemClick = { newsItem -> onNewsClick(newsItem) },
                             onToggleFav = { viewModel.toggleFavorite(it) },
-                            onLoadMore = { viewModel.loadNextPage() }
-                        )
+                            onLoadMore = { viewModel.loadNextPage() })
                     }
 
                 }
@@ -127,7 +125,7 @@ fun FeedContent(
         derivedStateOf {
             val lastVisibleItem = listState.layoutInfo.visibleItemsInfo.lastOrNull()
             val totalItems = listState.layoutInfo.totalItemsCount
-            lastVisibleItem != null && lastVisibleItem.index >= totalItems - 3 && hasMoreItems
+            lastVisibleItem != null && lastVisibleItem.index >= totalItems - 5 && hasMoreItems
         }
     }
 
@@ -153,7 +151,7 @@ fun FeedContent(
         }
 
         if (isLoadingMore) {
-            item {
+            item(key = "loading_indicator") {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -166,7 +164,7 @@ fun FeedContent(
         }
 
         if (!hasMoreItems && items.isNotEmpty()) {
-            item {
+            item(key = "end_of_list") {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
