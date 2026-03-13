@@ -1,7 +1,5 @@
 package com.techun.dev.aniflow.feed.data.model
 
-import com.techun.dev.aniflow.core.data.database.entity.RssItemEntity
-
 data class RssItemDto(
     val title: String,
     val link: String,

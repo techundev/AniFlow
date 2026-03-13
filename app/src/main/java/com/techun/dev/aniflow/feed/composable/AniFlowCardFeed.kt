@@ -145,7 +145,9 @@ fun AniFlowCardFeed(
                 HorizontalDivider(modifier = Modifier.fillMaxWidth(), thickness = 1.dp)
                 Spacer(modifier = Modifier.height(2.dp))
                 AniFlowCardFooter(
-                    timeAgo = item.pubDate, modifier = Modifier.fillMaxWidth()
+                    source = item.source,
+                    timeAgo = item.pubDate,
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
         }

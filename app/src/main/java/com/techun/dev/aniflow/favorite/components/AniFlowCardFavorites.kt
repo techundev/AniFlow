@@ -116,7 +116,9 @@ fun AniFlowCardFavorites(
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 AniFlowCardFooter(
-                    timeAgo = item.pubDate, modifier = Modifier.fillMaxWidth()
+                    source = item.source,
+                    timeAgo = item.pubDate,
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
         }
