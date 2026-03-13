@@ -11,15 +11,3 @@ data class RssItemDto(
     val imageUrl: String,
     val source: String = "MAL"
 )
-
-
-fun RssItemDto.toEntity() = RssItemEntity(
-    id = link,
-    title = title,
-    link = link,
-    description = description,
-    pubDate = pubDate,
-    author = author,
-    imageUrl = imageUrl,
-    source = source
-)
