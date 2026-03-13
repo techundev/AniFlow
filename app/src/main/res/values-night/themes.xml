@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <style name="Theme.AniFlow" parent="android:Theme.Material.Light.NoActionBar" />
 
     <style name="Theme.AniFlow.Splash" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">#FFFFFF</item>
+        <item name="windowSplashScreenBackground">#0F0F0F</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/logo_splash_screen</item>
         <item name="postSplashScreenTheme">@style/Theme.AniFlow</item>
     </style>
