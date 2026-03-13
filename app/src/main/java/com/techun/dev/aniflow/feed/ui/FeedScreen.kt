@@ -121,16 +121,17 @@ fun FeedContent(
 ) {
     val listState = rememberLazyListState()
 
-    val shouldLoadMore by remember(hasMoreItems) {
+    val shouldLoadMore by remember {
         derivedStateOf {
             val lastVisibleItem = listState.layoutInfo.visibleItemsInfo.lastOrNull()
+                ?: return@derivedStateOf false
             val totalItems = listState.layoutInfo.totalItemsCount
-            lastVisibleItem != null && lastVisibleItem.index >= totalItems - 5 && hasMoreItems
+            lastVisibleItem.index >= totalItems - 3
         }
     }
 
-    LaunchedEffect(shouldLoadMore, isLoadingMore) {
-        if (shouldLoadMore && !isLoadingMore) {
+    LaunchedEffect(shouldLoadMore) {
+        if (shouldLoadMore && hasMoreItems && !isLoadingMore) {
             onLoadMore()
         }
     }
@@ -150,8 +151,8 @@ fun FeedContent(
             )
         }
 
-        if (isLoadingMore) {
-            item(key = "loading_indicator") {
+        when {
+            isLoadingMore -> item(key = "loading_indicator") {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -161,10 +162,8 @@ fun FeedContent(
                     CircularProgressIndicator(modifier = Modifier.size(32.dp))
                 }
             }
-        }
 
-        if (!hasMoreItems && items.isNotEmpty()) {
-            item(key = "end_of_list") {
+            !hasMoreItems && items.isNotEmpty() -> item(key = "end_of_list") {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()

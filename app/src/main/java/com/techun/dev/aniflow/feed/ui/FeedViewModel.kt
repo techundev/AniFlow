@@ -57,18 +57,19 @@ class FeedViewModel(
             _isLoadingMore.value = true
 
             val newItems = getNewsPagedUseCase(
-                limit = PAGE_SIZE,
+                limit = PAGE_SIZE + 1,
                 offset = currentOffset
             )
 
             if (newItems.isEmpty()) {
                 _hasMoreItems.value = false
             } else {
-                _pagedItems.value += newItems
-                currentOffset += newItems.size
+                val hasMore = newItems.size > PAGE_SIZE
 
-                val hasMore = getNewsPagedUseCase(limit = 1, offset = currentOffset)
-                _hasMoreItems.value = hasMore.isNotEmpty()
+                val itemsToAdd = if (hasMore) newItems.take(PAGE_SIZE) else newItems
+                _pagedItems.value += itemsToAdd
+                currentOffset += itemsToAdd.size
+                _hasMoreItems.value = hasMore
             }
             _isLoadingMore.value = false
         }
