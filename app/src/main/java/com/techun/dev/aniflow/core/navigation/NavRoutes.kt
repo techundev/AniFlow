@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 sealed class NavRoutes : NavKey {
     @Serializable
-    data object Home : NavRoutes()
+    data object Feed : NavRoutes()
 
     @Serializable
     data object Favorites : NavRoutes()

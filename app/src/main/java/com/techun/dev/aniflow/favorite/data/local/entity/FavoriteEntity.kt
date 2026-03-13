@@ -11,5 +11,6 @@ data class FavoriteEntity(
     val description: String,
     val pubDate: String,
     val imageUrl: String,
-    val savedAt: Long = System.currentTimeMillis()
+    val savedAt: Long = System.currentTimeMillis(),
+    val source: String
 )

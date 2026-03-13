@@ -12,6 +12,7 @@ fun FavoriteEntity.toFavoriteItem() = FavoriteItem(
     description = description,
     pubDate = pubDate,
     imageUrl = imageUrl,
+    source = source,
     savedAt = savedAt
 )
 
@@ -23,6 +24,7 @@ fun FavoriteItem.toEntity() = FavoriteEntity(
     description = description,
     pubDate = pubDate,
     imageUrl = imageUrl,
+    source = source,
     savedAt = savedAt
 )
 
@@ -34,6 +36,7 @@ fun NewsItem.toFavoriteItem() = FavoriteItem(
     description = description,
     pubDate = pubDate,
     imageUrl = imageUrl,
+    source = source,
     savedAt = System.currentTimeMillis()
 )
 
@@ -44,5 +47,6 @@ fun FavoriteItem.toNewsItem() = NewsItem(
     description = description,
     pubDate = pubDate,
     imageUrl = imageUrl,
+    source = source,
     isFavorite = true
 )
