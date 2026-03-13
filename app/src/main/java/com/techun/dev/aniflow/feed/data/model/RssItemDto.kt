@@ -8,7 +8,8 @@ data class RssItemDto(
     val description: String,
     val pubDate: String,
     val author: String,
-    val imageUrl: String
+    val imageUrl: String,
+    val source: String = "MAL"
 )
 
 
@@ -20,4 +21,5 @@ fun RssItemDto.toEntity() = RssItemEntity(
     pubDate = pubDate,
     author = author,
     imageUrl = imageUrl,
+    source = source
 )

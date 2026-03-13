@@ -7,5 +7,6 @@ data class NewsItem(
     val description: String,
     val pubDate: String,
     val imageUrl: String,
+    val source: String = "MAL",
     val isFavorite: Boolean
 )
