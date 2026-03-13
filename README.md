@@ -20,12 +20,12 @@ Una aplicación de noticias de anime con soporte multi-fuente (MyAnimeList + Cru
 
 ## 📱 Pantallas
 
-| Pantalla | Descripción |
-|---|---|
-| **Home** | Feed de noticias con paginación, pull to refresh y badge por fuente (MAL / CR) |
-| **Detail** | Detalle completo de la noticia con noticias relacionadas y opción de abrir el enlace original |
+| Pantalla      | Descripción |
+|---------------|---|
+| **Feed**      | Feed de noticias con paginación, pull to refresh y badge por fuente (MAL / CR) |
+| **Detail**    | Detalle completo de la noticia con noticias relacionadas y opción de abrir el enlace original |
 | **Favorites** | Lista de noticias guardadas de forma persistente |
-| **Profile** | Perfil del usuario con estadísticas y configuración de nombre y avatar |
+| **Profile**   | Perfil del usuario con estadísticas y configuración de nombre y avatar |
 
 ### 🖼️ Vista previa
 
@@ -175,7 +175,7 @@ implementation("androidx.navigation3:navigation3-runtime:1.x.x")
 
 ¿Quieres probar la app sin compilar el proyecto? Descarga directamente el APK:
 
-[![Descargar APK](https://img.shields.io/badge/Descargar-APK_v1.0.0-FFD700?style=for-the-badge&logo=android&logoColor=white)](https://github.com/techundev/AniFlow/releases/tag/v1.0.0)
+[![Descargar APK](https://img.shields.io/badge/Descargar-APK_v1.0.0-FFD700?style=for-the-badge&logo=android&logoColor=white)](https://github.com/techundev/AniFlow/releases/download/v1.0.0/AniFlow-v1.0.0.apk)
 
 > **Nota:** Es necesario habilitar la instalación de fuentes desconocidas en tu dispositivo Android.  
 > `Ajustes → Seguridad → Instalar apps desconocidas`
@@ -184,7 +184,7 @@ implementation("androidx.navigation3:navigation3-runtime:1.x.x")
 
 ## 👨‍💻 Desarrollador
 
-Desarrollado por [Techun.dev](https://github.com/TechUn-GT).
+Desarrollado por [Techun.dev](https://github.com/techundev).
 
 ---
 
