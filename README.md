@@ -14,7 +14,7 @@
 
 # 🎌 AniFlow — Anime News Reader
 
-Una aplicación de noticias de anime con soporte multi-fuente (MyAnimeList + Crunchyroll), favoritos y modo offline, desarrollada en Android con Jetpack Compose por [Techun.dev](https://github.com/TechUn-GT).
+Una aplicación de noticias de anime con soporte multi-fuente (MyAnimeList + Crunchyroll), favoritos y modo offline, desarrollada en Android con Jetpack Compose por [Techun.dev](https://github.com/techundev).
 
 ---
 
@@ -190,4 +190,4 @@ Desarrollado por [Techun.dev](https://github.com/TechUn-GT).
 
 ## 📄 Licencia
 
-Este proyecto es de uso personal y de libre consulta. Desarrollado por [Techun.dev](https://github.com/TechUn-GT).
+Este proyecto es de uso personal y de libre consulta. Desarrollado por [Techun.dev](https://github.com/techundev).
