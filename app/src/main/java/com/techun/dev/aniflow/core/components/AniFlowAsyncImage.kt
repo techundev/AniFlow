@@ -14,12 +14,12 @@ import com.techun.dev.aniflow.R
 
 @Composable
 fun AniFlowAsyncImage(
+    modifier: Modifier = Modifier,
     data: Any,
     contentDescription: String? = null,
-    modifier: Modifier = Modifier,
-    drawablePlaceHolder: Int = R.drawable.ic_launcher_foreground,
-    drawableError: Int = R.drawable.ic_launcher_foreground,
-    cossFadeDurationMillis: Int = 500,
+    drawablePlaceHolder: Int = R.drawable.logo_splash_screen,
+    drawableError: Int =R.drawable.logo_splash_screen,
+    crossFadeDurationMillis: Int = 500,
     contentScale: ContentScale = ContentScale.Fit,
 ) {
     AsyncImage(
@@ -27,7 +27,7 @@ fun AniFlowAsyncImage(
             .Builder(LocalContext.current)
             .data(data)
             .crossfade(true)
-            .crossfade(cossFadeDurationMillis)
+            .crossfade(crossFadeDurationMillis)
             .diskCachePolicy(CachePolicy.ENABLED)
             .networkCachePolicy(CachePolicy.ENABLED)
             .placeholder(drawablePlaceHolder)

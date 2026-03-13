@@ -127,7 +127,7 @@ fun FeedContent(
             val lastVisibleItem = listState.layoutInfo.visibleItemsInfo.lastOrNull()
                 ?: return@derivedStateOf false
             val totalItems = listState.layoutInfo.totalItemsCount
-            lastVisibleItem.index >= totalItems - 3
+            lastVisibleItem.index >= (totalItems * 0.85).toInt()
         }
     }
 
