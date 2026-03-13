@@ -7,5 +7,6 @@ data class FavoriteItem(
     val description: String,
     val pubDate: String,
     val imageUrl: String,
-    val savedAt: Long
+    val savedAt: Long,
+    val source: String
 )

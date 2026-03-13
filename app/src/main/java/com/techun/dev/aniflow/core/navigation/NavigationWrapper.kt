@@ -10,10 +10,9 @@ import com.techun.dev.aniflow.core.utils.ex.back
 import com.techun.dev.aniflow.core.utils.ex.navigateTo
 import com.techun.dev.aniflow.core.navigation.NavRoutes.Error
 import com.techun.dev.aniflow.core.navigation.NavRoutes.Favorites
-import com.techun.dev.aniflow.core.navigation.NavRoutes.Home
+import com.techun.dev.aniflow.core.navigation.NavRoutes.Feed
 import com.techun.dev.aniflow.core.navigation.NavRoutes.Profile
 import com.techun.dev.aniflow.core.navigation.NavRoutes.Detail
-import com.techun.dev.aniflow.core.utils.ex.navigateAndClear
 import com.techun.dev.aniflow.detail.ui.DetailScreen
 import com.techun.dev.aniflow.favorite.ui.FavoritesScreen
 import com.techun.dev.aniflow.feed.ui.FeedScreen
@@ -25,16 +24,16 @@ fun NavigationWrapper(
 ) {
     NavDisplay(backStack = backStack, modifier = modifier, onBack = {
         when {
-            backStack.lastOrNull() is Home -> false
+            backStack.lastOrNull() is Feed -> false
             backStack.lastOrNull() is Detail -> backStack.back()
             else -> {
                 backStack.clear()
-                backStack.add(Home)
+                backStack.add(Feed)
                 true
             }
         }
     }, entryProvider = entryProvider {
-        entry<Home> {
+        entry<Feed> {
             FeedScreen(
                 onNewsClick = { itemId ->
                     backStack.navigateTo(Detail(newsItemId = itemId))
