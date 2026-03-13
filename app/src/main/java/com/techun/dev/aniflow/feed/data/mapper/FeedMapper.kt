@@ -1,6 +1,7 @@
 package com.techun.dev.aniflow.feed.data.mapper
 
 import com.techun.dev.aniflow.core.data.database.entity.RssItemEntity
+import com.techun.dev.aniflow.core.utils.toReadableDate
 import com.techun.dev.aniflow.feed.data.model.RssItemDto
 
 fun RssItemDto.toEntity() = RssItemEntity(
@@ -8,7 +9,7 @@ fun RssItemDto.toEntity() = RssItemEntity(
     title = title,
     link = link,
     description = description,
-    pubDate = pubDate,
+    pubDate = pubDate.toReadableDate(),
     author = author,
     imageUrl = imageUrl,
     source = source

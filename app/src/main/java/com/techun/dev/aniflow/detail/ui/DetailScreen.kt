@@ -170,7 +170,7 @@ fun DetailContent(
                     tag = "MAL News", color = Color(0xFFE879F9)
                 )
                 AniFlowText(
-                    text = newsItem.pubDate.toReadableDate(),
+                    text = newsItem.pubDate,
                     fontSize = 11.sp,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
