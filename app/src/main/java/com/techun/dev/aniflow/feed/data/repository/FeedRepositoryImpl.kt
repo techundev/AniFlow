@@ -1,8 +1,7 @@
 package com.techun.dev.aniflow.feed.data.repository
 
-import com.techun.dev.aniflow.core.data.database.entity.toNewsItem
 import com.techun.dev.aniflow.core.data.mapper.toNewsItem
-import com.techun.dev.aniflow.feed.data.database.FeedDao
+import com.techun.dev.aniflow.feed.data.local.dao.FeedDao
 import com.techun.dev.aniflow.feed.data.mapper.toEntity
 import com.techun.dev.aniflow.feed.data.remote.FeedRemoteDataSource
 import com.techun.dev.aniflow.feed.domain.model.NewsItem

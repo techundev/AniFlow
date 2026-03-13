@@ -1,4 +1,4 @@
-package com.techun.dev.aniflow.feed.data.database
+package com.techun.dev.aniflow.feed.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -16,7 +16,7 @@ interface FeedDao {
     @Query("SELECT * FROM RssItem")
     fun getAllNews(): Flow<List<RssItemEntity>>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.Companion.IGNORE)
     suspend fun insertNews(news: List<RssItemEntity>)
 
     @Query(
