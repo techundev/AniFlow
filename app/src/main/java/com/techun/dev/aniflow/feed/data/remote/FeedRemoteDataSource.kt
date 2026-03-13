@@ -5,7 +5,7 @@ import android.util.Log
 import com.rometools.rome.feed.synd.SyndFeed
 import com.rometools.rome.io.SyndFeedInput
 import com.rometools.rome.io.XmlReader
-import com.techun.dev.aniflow.core.model.RssSource
+import com.techun.dev.aniflow.core.data.model.RssSource
 import com.techun.dev.aniflow.feed.data.model.RssItemDto
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
