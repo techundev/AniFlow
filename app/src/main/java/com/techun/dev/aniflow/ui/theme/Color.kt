@@ -29,3 +29,7 @@ val LightOutline = Color(0xFFC4C2E0)
 val ErrorRed = Color(0xFFCF6679)
 val ErrorRedLight = Color(0xFFB3001B)
 val SuccessGreen = Color(0xFF4CAF82)
+
+// === Sources ===
+val SourceMAL = Color(0xFF161AF9)
+val SourceCR = Color(0xFFF97316)
